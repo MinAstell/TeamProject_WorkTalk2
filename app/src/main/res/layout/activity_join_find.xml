@@ -1,0 +1,830 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#afdff9"
+    tools:context=".Join_Find">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/joinPage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:gravity="center"
+                android:orientation="vertical" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="9"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Work Talk 회원가입"
+                    android:textColor="#000000"
+                    android:textSize="28dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="9"
+                android:background="#F1F1F1"
+                android:orientation="vertical"
+                android:paddingHorizontal="10dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/et_mail"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:ems="10"
+                            android:hint="메일"
+                            android:inputType="textPersonName"
+                            android:textColor="#000000"
+                            android:textColorHint="#808080" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="right|center_vertical"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/ib_all_del1"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/btn_all_del"
+                            android:text="Button"
+                            android:visibility="visible" />
+                    </LinearLayout>
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="18"
+                android:background="#F1F1F1"
+                android:orientation="vertical"
+                android:paddingHorizontal="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="50"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <EditText
+                                android:id="@+id/et_pw"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:ems="10"
+                                android:hint="비밀번호 (6자 이상)"
+                                android:inputType="textPersonName"
+                                android:textColor="#000000"
+                                android:textColorHint="#808080" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="right|center_vertical"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/ib_all_del2"
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:background="@android:color/transparent"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/btn_all_del"
+                                android:text="Button"
+                                android:visibility="visible" />
+                        </LinearLayout>
+                    </FrameLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="50"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <EditText
+                                android:id="@+id/et_pw2"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:ems="10"
+                                android:hint="비밀번호 확인 (6자 이상)"
+                                android:inputType="textPersonName"
+                                android:textColor="#000000"
+                                android:textColorHint="#808080" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="right|center_vertical"
+                            android:orientation="vertical">
+
+                            <ImageButton
+                                android:id="@+id/ib_all_del3"
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:background="@android:color/transparent"
+                                android:scaleType="fitCenter"
+                                android:src="@drawable/btn_all_del"
+                                android:text="Button"
+                                android:visibility="visible" />
+                        </LinearLayout>
+                    </FrameLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="9"
+                android:background="#F1F1F1"
+                android:orientation="vertical"
+                android:paddingHorizontal="10dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/et_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:ems="10"
+                            android:hint="이름"
+                            android:inputType="textPersonName"
+                            android:textColor="#000000"
+                            android:textColorHint="#808080" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="right|center_vertical"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/ib_all_del4"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/btn_all_del"
+                            android:text="Button"
+                            android:visibility="visible" />
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="9"
+                android:background="#F1F1F1"
+                android:orientation="vertical"
+                android:paddingHorizontal="10dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/et_emp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:ems="10"
+                            android:hint="사원번호"
+                            android:inputType="textPersonName"
+                            android:textColor="#000000"
+                            android:textColorHint="#808080" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="right|center_vertical"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/ib_all_del5"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/btn_all_del"
+                            android:text="Button"
+                            android:visibility="visible" />
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="9"
+                android:background="#F1F1F1"
+                android:orientation="vertical"
+                android:paddingHorizontal="10dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/et_phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:ems="10"
+                            android:hint="전화번호"
+                            android:inputType="textPersonName"
+                            android:textColor="#000000"
+                            android:textColorHint="#808080" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="right|center_vertical"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/ib_all_del6"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/btn_all_del"
+                            android:text="Button"
+                            android:visibility="visible" />
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="9"
+                android:background="#F1F1F1"
+                android:orientation="vertical"
+                android:paddingHorizontal="10dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/et_dept"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:ems="10"
+                            android:hint="부서"
+                            android:inputType="textPersonName"
+                            android:textColor="#000000"
+                            android:textColorHint="#808080" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="right|center_vertical"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/ib_all_del7"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/btn_all_del"
+                            android:text="Button"
+                            android:visibility="visible" />
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="9"
+                android:background="#F1F1F1"
+                android:orientation="vertical"
+                android:paddingHorizontal="10dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/et_job"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:ems="10"
+                            android:hint="직급"
+                            android:inputType="textPersonName"
+                            android:textColor="#000000"
+                            android:textColorHint="#808080" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="right|center_vertical"
+                        android:orientation="vertical">
+
+                        <ImageButton
+                            android:id="@+id/ib_all_del8"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:background="@android:color/transparent"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/btn_all_del"
+                            android:text="Button"
+                            android:visibility="visible" />
+                    </LinearLayout>
+                </FrameLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="9"
+                android:gravity="bottom|center_horizontal"
+                android:orientation="vertical"
+                android:paddingHorizontal="30dp"
+                android:paddingTop="15dp">
+
+                <Button
+                    android:id="@+id/btn_join"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#5AA1D8"
+                    android:scaleType="fitCenter"
+                    android:text="가입하기"
+                    android:textSize="22dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:orientation="vertical"></LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/loginPage2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#AFDFF9"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:orientation="vertical"></LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="40"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/worktalk_logo" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="50"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/selAccount"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#afdff9"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="20"
+                            android:background="#F1F1F1"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="10dp">
+
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <EditText
+                                        android:id="@+id/et_inpEmp"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:ems="10"
+                                        android:hint="가입시 작성한 사원번호"
+                                        android:inputType="textPersonName"
+                                        android:textColor="#000000"
+                                        android:textColorHint="#808080" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="right|center_vertical"
+                                    android:orientation="vertical">
+
+                                    <ImageButton
+                                        android:id="@+id/ib_all_del_find_mail"
+                                        android:layout_width="22dp"
+                                        android:layout_height="22dp"
+                                        android:background="@android:color/transparent"
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/btn_all_del"
+                                        android:text="Button"
+                                        android:visibility="visible" />
+                                </LinearLayout>
+                            </FrameLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="20"
+                            android:background="#F1F1F1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="10dp">
+
+                            <TextView
+                                android:id="@+id/tv_viewId"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#0F265C"
+                                android:textSize="18dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="20"
+                            android:background="#F1F1F1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="10dp">
+
+                            <TextView
+                                android:id="@+id/tv_sucFindYourId"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#0F265C"
+                                android:textSize="18dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="20"
+                            android:gravity="bottom|center_horizontal"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="30dp"
+                            android:paddingTop="15dp">
+
+                            <Button
+                                android:id="@+id/btn_sendToDbFindYourAct"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#5AA1D8"
+                                android:scaleType="fitCenter"
+                                android:text="계정 찾기"
+                                android:textSize="22dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="20"
+                            android:orientation="vertical"></LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/selPw"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#afdff9"
+                        android:orientation="vertical"
+                        android:visibility="invisible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="20"
+                            android:background="#F1F1F1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="10dp">
+
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <EditText
+                                        android:id="@+id/et_inpEmail"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:ems="10"
+                                        android:hint="이메일"
+                                        android:inputType="textPersonName"
+                                        android:textColor="#000000"
+                                        android:textColorHint="#808080" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="right|center_vertical"
+                                    android:orientation="vertical">
+
+                                    <ImageButton
+                                        android:id="@+id/ib_all_del_find_pw"
+                                        android:layout_width="22dp"
+                                        android:layout_height="22dp"
+                                        android:background="@android:color/transparent"
+                                        android:scaleType="fitCenter"
+                                        android:src="@drawable/btn_all_del"
+                                        android:text="Button"
+                                        android:visibility="visible" />
+                                </LinearLayout>
+                            </FrameLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="20"
+                            android:gravity="bottom|center_horizontal"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="30dp"
+                            android:paddingVertical="7dp">
+
+                            <Button
+                                android:id="@+id/btn_sendToDbFindYourPw"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="#5AA1D8"
+                                android:scaleType="fitCenter"
+                                android:text="비밀번호 변경"
+                                android:textSize="22dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/modifyPw"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="60"
+                            android:orientation="vertical"
+                            android:visibility="invisible">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="20"
+                                android:background="#f1f1f1"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="10dp">
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical">
+
+                                        <EditText
+                                            android:id="@+id/et_newPw"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:ems="10"
+                                            android:hint="새로운 비밀번호"
+                                            android:inputType="textPersonName"
+                                            android:textColor="#000000"
+                                            android:textColorHint="#808080" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="right|center_vertical"
+                                        android:orientation="vertical">
+
+                                        <ImageButton
+                                            android:id="@+id/ib_all_del_change_pw1"
+                                            android:layout_width="22dp"
+                                            android:layout_height="22dp"
+                                            android:background="@android:color/transparent"
+                                            android:scaleType="fitCenter"
+                                            android:src="@drawable/btn_all_del"
+                                            android:text="Button"
+                                            android:visibility="visible" />
+                                    </LinearLayout>
+                                </FrameLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="20"
+                                android:background="#f1f1f1"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="10dp">
+
+                                <FrameLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical">
+
+                                        <EditText
+                                            android:id="@+id/et_newRePw"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:ems="10"
+                                            android:hint="새로운 비밀번호 확인"
+                                            android:inputType="textPersonName"
+                                            android:textColor="#000000"
+                                            android:textColorHint="#808080" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:gravity="right|center_vertical"
+                                        android:orientation="vertical">
+
+                                        <ImageButton
+                                            android:id="@+id/ib_all_del_change_pw2"
+                                            android:layout_width="22dp"
+                                            android:layout_height="22dp"
+                                            android:background="@android:color/transparent"
+                                            android:scaleType="fitCenter"
+                                            android:src="@drawable/btn_all_del"
+                                            android:text="Button"
+                                            android:visibility="visible" />
+                                    </LinearLayout>
+                                </FrameLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="20"
+                                android:gravity="bottom|center_horizontal"
+                                android:orientation="vertical"
+                                android:paddingHorizontal="30dp"
+                                android:paddingTop="15dp">
+
+                                <Button
+                                    android:id="@+id/btn_modifyPw"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:background="#5AA1D8"
+                                    android:scaleType="fitCenter"
+                                    android:text="새 비밀번호 설정"
+                                    android:textSize="22dp" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:orientation="vertical"></LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+</LinearLayout>

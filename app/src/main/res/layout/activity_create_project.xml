@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_createProjectName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="#808080"
+            android:ems="10"
+            android:hint="프로젝트 이름 (최대 20글자)"
+            android:inputType="textPersonName"
+            android:maxLength="20"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="93"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/et_createProjectExplain"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="7dp"
+            android:background="@null"
+            android:ems="10"
+            android:gravity="top"
+            android:hint="프로젝트 설명 (최대 300글자)"
+            android:inputType="textMultiLine"
+            android:maxLength="300"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="프로젝트 타이틀"
+            android:textSize="14sp" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radio_projectImage1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:checked="true"
+                android:drawableRight="@drawable/test_icon_customize"
+                android:paddingRight="45dp" />
+
+            <RadioButton
+                android:id="@+id/radio_projectImage2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:checked="false"
+                android:drawableRight="@drawable/test_icon_customize"
+                android:paddingRight="45dp" />
+
+            <RadioButton
+                android:id="@+id/radio_projectImage3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:checked="false"
+                android:drawableRight="@drawable/test_icon_customize"
+                android:paddingRight="45dp" />
+
+            <RadioButton
+                android:id="@+id/radio_projectImage4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:checked="false"
+                android:drawableRight="@drawable/test_icon_customize"
+                android:paddingRight="45dp" />
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_createProject"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:text="프로젝트 생성" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
