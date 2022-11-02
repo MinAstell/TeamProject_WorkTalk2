@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.util.Log;
@@ -71,7 +72,10 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                 .setContentText(body)         // 콘솔에서 설정한 내용
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent)// 사용자가 노티피케이션을 탭시 ResultActivity로 이동하도록 설정
-                .setAutoCancel(true);             // 메시지를 터치하면 메시지가 자동으로 제거됨
+                .setAutoCancel(true)             // 메시지를 터치하면 메시지가 자동으로 제거됨
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.profile_simple))
+                .setSmallIcon(R.drawable.worktalk_logo)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
         notificationManager.notify((int) System.currentTimeMillis(), builder.build()); // 고유숫자로 노티피케이션 동작시킴
     }
@@ -94,7 +98,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
             // 3. 알림 메시지를 관리하는 객체에 노티피케이션 채널을 등록
             notificationManager.createNotificationChannel(channel);
-            builder.setSmallIcon(R.drawable.ic_launcher_foreground); //mipmap 사용시 Oreo 이상에서 시스템 UI 에러남
+            builder.setSmallIcon(R.drawable.worktalk_logo); //mipmap 사용시 Oreo 이상에서 시스템 UI 에러남
             return builder;
 
         } else { // Oreo 이하에서 mipmap 사용하지 않으면 Couldn't create icon: StatusBarIcon 에러남
