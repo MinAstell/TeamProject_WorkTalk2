@@ -39,6 +39,8 @@ public class ChatRoom_Adapter extends RecyclerView.Adapter<ChatRoom_Adapter.Cust
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_item, parent, false);
         CustomViewHolder holder = new CustomViewHolder(view);
+        //View view_me = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_item_me, parent, false);
+        //CustomViewHolder holder_me = new CustomViewHolder(view);
 
         return holder;
     }
