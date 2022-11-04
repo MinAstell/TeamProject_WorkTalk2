@@ -60,8 +60,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
+                    android:backgroundTint="#AFDEF9"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/project_new" />
+                    android:src="@drawable/users_new" />
 
             </RelativeLayout>
         </FrameLayout>
