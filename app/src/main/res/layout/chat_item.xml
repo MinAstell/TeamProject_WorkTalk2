@@ -6,71 +6,101 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:orientation="horizontal"></LinearLayout>
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/LinearLayoutUserName"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_gravity="bottom"
-        android:orientation="horizontal"
-        android:paddingHorizontal="7dp">
-
-        <ImageView
-            android:id="@+id/iv_profile"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
-
-        <TextView
-            android:id="@+id/tv_nick"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:gravity="center"
-            android:text="유저네임"
-            android:textColor="#000000" />
-    </LinearLayout>
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/LinearLayoutMessage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="42dp"
-        android:paddingRight="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:orientation="horizontal"></LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutUserName"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_gravity="bottom"
+                android:orientation="horizontal"
+                android:paddingHorizontal="45dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tv_nick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="유저네임"
+                    android:textColor="#000000" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/LinearLayoutMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="25dp"
+                android:paddingRight="10dp">
 
 
-        <TextView
-            android:id="@+id/tv_comments"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/leftbubble_2"
-            android:maxWidth="200dp"
-            android:textColor="#000000"
-            android:textSize="22sp" />
+                <TextView
+                    android:id="@+id/readChecked"
+                    android:layout_width="10dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="bottom|right"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:text="1"
+                    android:textColor="#000000"
+                    android:textSize="21sp" />
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_comments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/leftbubble_3"
+                    android:maxWidth="250dp"
+                    android:textColor="#000000"
+                    android:textSize="22sp" />
 
-    <LinearLayout
-        android:id="@+id/LinearLayoutTimestamp"
-        android:layout_width="match_parent"
-        android:layout_height="16dp"
-        android:orientation="horizontal"
-        android:paddingHorizontal="15dp">
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/tv_timestamp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12dp" />
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/LinearLayoutTimestamp"
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="15dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:orientation="horizontal"></LinearLayout>
+                <TextView
+                    android:id="@+id/tv_timestamp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:orientation="horizontal"></LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="7dp"
+            android:paddingTop="5dp">
+
+            <ImageView
+                android:id="@+id/iv_profile"
+                android:layout_width="35dp"
+                android:layout_height="35dp" />
+        </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>

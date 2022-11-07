@@ -20,6 +20,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,9 @@ import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.FileNotFoundException;
@@ -47,6 +51,8 @@ public class FragSettings extends Fragment {
     Uri uri;
     ImageView iv_settings_profile_photo_change;
 
+    private static final int PICK_FROM_ALBUM = 1;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,8 +68,7 @@ public class FragSettings extends Fragment {
         btn_settings_user_signout = view.findViewById(R.id.btn_settings_user_signout);
         btn_settings_user_delete = view.findViewById(R.id.btn_settings_user_delete);
 
-        iv_settings_profile_photo_change = view.findViewById(R.id.iv_settings_profile_photo_change);
-        view.findViewById(R.id.btn_settings_profile_photo_change).setOnClickListener(mClick);
+        iv_settings_profile_photo_change = (ImageView) view.findViewById(R.id.iv_settings_profile_photo_change);
 
         btn_settings_user_signout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +85,15 @@ public class FragSettings extends Fragment {
 
             }
         });
+        btn_settings_profile_photo_change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                Intent intent = new Intent(Intent.ACTION_PICK);  // 사진 가져오기(앨범)
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                startActivityForResult(intent, PICK_FROM_ALBUM);
+            }
+        });
         return view;
     }
     public void showAlert(String msg) {
@@ -94,36 +107,33 @@ public class FragSettings extends Fragment {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-    // 프사변경 기능을 버튼에 할당
-    View.OnClickListener mClick = new View.OnClickListener() {
-        public void onClick(View v) {
-            switch(v.getId()) {
-                case R.id.btn_settings_profile_photo_change:
-                    Intent intent = new Intent(Intent.ACTION_PICK);
-                    intent.setType("image/*");
-                    profile_photo_change.launch(intent);
-                    break;
-            }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_FROM_ALBUM) {
+            iv_settings_profile_photo_change.setImageURI(data.getData());  // 프로필 뷰를 바꿈
+            Glide.with(this).load(data.getData()).apply(new RequestOptions().circleCrop().diskCacheStrategy(DiskCacheStrategy.NONE)).into(iv_settings_profile_photo_change);
+            //Glide.with(this).load(img).diskCacheStrategy(DiskCacheStrategy.NONE).into(product_img_imageview);
+            uri = data.getData();  // 이미지 경로원본
         }
-    };
-    ActivityResultLauncher<Intent> profile_photo_change = registerForActivityResult(
-        new ActivityResultContracts.StartActivityForResult(),
-        new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                if( result.getResultCode() == RESULT_OK && result.getData() != null){
-
-                    uri = result.getData().getData();
-                    try {
-                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(requireActivity().getContentResolver(), uri);
-                        iv_settings_profile_photo_change.setImageBitmap(bitmap);
-
-                    }catch (FileNotFoundException e){
-                        e.printStackTrace();
-                    }catch (IOException e){
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
