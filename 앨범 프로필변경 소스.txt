@@ -1,0 +1,27 @@
+
+iv_uploadProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(Intent.ACTION_PICK);  // 사진 가져오기(앨범)
+                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                startActivityForResult(intent, PICK_FROM_ALBUM);
+            }
+        });
+
+
+@Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_FROM_ALBUM && resultCode == RESULT_OK) {
+
+//            iv_uploadProfile.setImageURI(data.getData());  // 프로필 뷰를 바꿈
+
+            Glide.with(getApplication()).load(data.getData()).apply(new RequestOptions().circleCrop()).into(iv_uploadProfile);
+
+            imageUri = data.getData();  // 이미지 경로원본
+        }
+    }
+
