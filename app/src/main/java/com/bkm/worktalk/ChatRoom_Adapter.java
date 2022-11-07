@@ -1,6 +1,7 @@
 package com.bkm.worktalk;
 
 import android.content.Context;
+import android.text.Layout;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -26,6 +27,8 @@ public class ChatRoom_Adapter extends RecyclerView.Adapter<ChatRoom_Adapter.Cust
     private Context context;
 
     private ArrayList<ChatRoom_DTO.Comment> arrayList;
+
+    Layout LinearLayoutUserName;
 
     public ChatRoom_Adapter(ArrayList<ChatRoom_DTO.Comment> arrayList, Context context, String myName) {
         this.arrayList = arrayList;
@@ -66,13 +69,14 @@ public class ChatRoom_Adapter extends RecyclerView.Adapter<ChatRoom_Adapter.Cust
             holder.LinearLayoutMessage.setGravity(Gravity.RIGHT);
             holder.LinearLayoutUserName.setGravity(Gravity.RIGHT);
             holder.LinearLayoutTimestamp.setGravity(Gravity.RIGHT);
+            holder.LinearLayoutUserName.setVisibility(View.GONE);
         }
         else {
 
             holder.tv_nick.setText(comment.userName);
             holder.tv_timestamp.setText(comment.timestamp);
             Glide.with(context).load(R.drawable.profile_simple).apply(new RequestOptions().circleCrop()).into(holder.iv_profile);
-            holder.tv_comments.setBackgroundResource(R.drawable.leftbubble_2);
+            holder.tv_comments.setBackgroundResource(R.drawable.leftbubble_3);
             holder.tv_comments.setTextSize(22);
 
             holder.LinearLayoutMessage.setGravity(Gravity.LEFT);
