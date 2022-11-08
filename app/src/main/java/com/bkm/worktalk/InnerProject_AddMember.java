@@ -78,7 +78,7 @@ public class InnerProject_AddMember extends AppCompatActivity {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) { //반복문으로 데이터 List를 추출해냄
                     InnerProject_AddMemberDTO addMemberDTO = snapshot.getValue(InnerProject_AddMemberDTO.class); //만들어뒀던 객체에 데이터를 담는다.
                     arrayList.add(addMemberDTO); //담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
-                    Log.d("memberList", arrayList.get(0).memberListName+"");
+                    Log.d("memberList", arrayList.get(0).name+"");
                 }
                 adapter.notifyDataSetChanged(); //리스트 저장 및 새로고침해야 반영이 됨
             }

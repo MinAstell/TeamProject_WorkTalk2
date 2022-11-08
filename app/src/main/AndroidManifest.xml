@@ -32,6 +32,9 @@
         <activity android:name=".CreateProject" />
         <activity android:name=".InnerProject" />
         <activity
+            android:name=".InnerProject_AddGoal"
+            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar" />
+        <activity
             android:name=".InnerProject_AddMember"
             android:theme="@style/Theme.AppCompat.Transparent.NoActionBar" />
         <activity android:name=".InsertOnly"/>

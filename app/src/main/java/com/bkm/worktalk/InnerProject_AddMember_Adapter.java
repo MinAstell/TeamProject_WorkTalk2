@@ -15,6 +15,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -54,9 +55,9 @@ public class InnerProject_AddMember_Adapter extends RecyclerView.Adapter<InnerPr
 
     @Override
     public void onBindViewHolder(@NonNull InnerProject_AddMember_Adapter.CustomViewHolder holder, int position) {
-        holder.tv_memberName.setText(arrayList.get(position).getMemberListName());
-        holder.tv_memberEmail.setText(arrayList.get(position).getMemberListEmail());
-        holder.tv_memberHP.setText(arrayList.get(position).getMemberListHP());
+        holder.tv_memberName.setText(arrayList.get(position).getName());
+        holder.tv_memberEmail.setText(arrayList.get(position).getEmail());
+        holder.tv_memberHP.setText(arrayList.get(position).getHp());
 
         holder.itemView.setTag(position);
 
@@ -67,7 +68,8 @@ public class InnerProject_AddMember_Adapter extends RecyclerView.Adapter<InnerPr
                 memberListEmail = holder.tv_memberEmail.getText().toString();
                 memberListHP = holder.tv_memberEmail.getText().toString();
 
-//                Log.d("projectName, projectExplain", projectName + ", " + projectExplain);
+                InnerProject_AddMemberDTO addMemberDTO = new InnerProject_AddMemberDTO(memberListEmail, memberListHP, memberListName);
+
 //                clickToInnerProject();
             }
         });
@@ -106,7 +108,7 @@ public class InnerProject_AddMember_Adapter extends RecyclerView.Adapter<InnerPr
         }
     }
 
-//    //리사이클러뷰 클릭시 InnerProject에 값을 줌========================================================
+    //리사이클러뷰 클릭시 InnerProject에 값을 줌========================================================
 //    public void clickToInnerProject() {
 //
 //        mDatabase.child(projectName).addListenerForSingleValueEvent(new ValueEventListener() {

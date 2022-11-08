@@ -2,42 +2,42 @@ package com.bkm.worktalk;
 
 public class InnerProject_AddMemberDTO {
 
-    public String memberListName;
-    public String memberListEmail;
-    public String memberListHP;
+    public String email;
+    public String hp;
+    public String name;
 
     public InnerProject_AddMemberDTO() {
     }
 
     //getter, setter 설정===========================================================================
-    public String getMemberListName() {
-        return memberListName;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMemberListName(String memberListName) {
-        this.memberListName = memberListName;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getMemberListEmail() {
-        return memberListEmail;
+    public String getHp() {
+        return hp;
     }
 
-    public void setMemberListEmail(String memberListEmail) {
-        this.memberListEmail = memberListEmail;
+    public void setHp(String hp) {
+        this.hp = hp;
     }
 
-    public String getMemberListHP() {
-        return memberListHP;
+    public String getName() {
+        return name;
     }
 
-    public void setMemberListHP(String memberListHP) {
-        this.memberListHP = memberListHP;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public InnerProject_AddMemberDTO(String memberListName, String memberListEmail, String memberListHP) {
-        this.memberListName = memberListName;
-        this.memberListEmail = memberListEmail;
-        this.memberListHP = memberListHP;
+    public InnerProject_AddMemberDTO(String email, String hp, String name) {
+        this.email = email;
+        this.hp = hp;
+        this.name = name;
     }
 
 }
