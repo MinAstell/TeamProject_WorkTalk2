@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
@@ -46,7 +47,9 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             String myName = remoteMessage.getData().get("receiver");
             String myUid = remoteMessage.getData().get("receiverUid");
 
-            sendNotification(title, body, myName, friendName, chatRoomPath, myUid);
+            if(Login.appData.getInt("AlarmChk", 999) == 1) {
+                sendNotification(title, body, myName, friendName, chatRoomPath, myUid);
+            }
         }
     }
 
