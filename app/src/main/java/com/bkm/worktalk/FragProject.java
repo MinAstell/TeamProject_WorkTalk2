@@ -62,6 +62,7 @@ public class FragProject extends Fragment {
         rv_projectList.setLayoutManager(layoutManager);
         arrayList = new ArrayList<>(); // 객체를 담을 어레이 리스트 (어댑터쪽으로)
 
+        //파이어베이스===============================================================================
         database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
         databaseReference = database.getReference("projectList"); // DB 테이블 연결
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -85,9 +86,9 @@ public class FragProject extends Fragment {
         adapter = new FragProject_Adapter(arrayList, getProjectName(), getProjectExplain(), getContext());
         rv_projectList.setAdapter(adapter); // 리사이클러뷰에 어댑터 연결
 
+        // 플로팅 버튼을 누르면 프로젝트 생성 창으로======================================================
         fab_project = (FloatingActionButton) view.findViewById(R.id.fab_project);
 
-        // 플로팅 버튼을 누르면 프로젝트 생성 창으로======================================================
         fab_project.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

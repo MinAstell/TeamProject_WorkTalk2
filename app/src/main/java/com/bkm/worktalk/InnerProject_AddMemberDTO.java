@@ -2,9 +2,9 @@ package com.bkm.worktalk;
 
 public class InnerProject_AddMemberDTO {
 
-    public String email;
-    public String hp;
-    public String name;
+    public String email; //멤버 이메일
+    public String hp; //멤버 전화번호
+    public String name; //멤버 이름
 
     public InnerProject_AddMemberDTO() {
     }
