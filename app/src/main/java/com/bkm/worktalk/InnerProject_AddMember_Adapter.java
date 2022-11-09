@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class InnerProject_AddMember_Adapter extends RecyclerView.Adapter<InnerProject_AddMember_Adapter.CustomViewHolder> {
@@ -27,17 +29,18 @@ public class InnerProject_AddMember_Adapter extends RecyclerView.Adapter<InnerPr
     //어댑터에서 액티비티 액션을 가져올 때 context가 필요한데 어댑터에는 context가 없다.
     //선택한 액티비티에 대한 context를 가져올 때 필요하다.
 
-    private String memberListName;
+    private String memberListName = "";
     private String memberListEmail;
     private String memberListHP;
 
-    public DatabaseReference mDatabase;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance(); //파이어베이스 데이터베이스 연동
+    private DatabaseReference mDatabase = database.getReference(); //데이터베이스의 특정 위치로 연결
 
-    public InnerProject_AddMember_Adapter(ArrayList<InnerProject_AddMemberDTO> arrayList, String memberListName, String memberListEmail, String memberListHP, Context context) {
+    public InnerProject_AddMember_Adapter(ArrayList<InnerProject_AddMemberDTO> arrayList, String memberListEmail, String memberListHP, String memberListName, Context context) {
         this.arrayList = arrayList;
-        this.memberListName = memberListName;
         this.memberListEmail = memberListEmail;
         this.memberListHP = memberListHP;
+        this.memberListName = memberListName;
         this.context = context;
     }
 
@@ -66,11 +69,14 @@ public class InnerProject_AddMember_Adapter extends RecyclerView.Adapter<InnerPr
             public void onClick(View view) {
                 memberListName = holder.tv_memberName.getText().toString();
                 memberListEmail = holder.tv_memberEmail.getText().toString();
-                memberListHP = holder.tv_memberEmail.getText().toString();
+                memberListHP = holder.tv_memberHP.getText().toString();
 
-                InnerProject_AddMemberDTO addMemberDTO = new InnerProject_AddMemberDTO(memberListEmail, memberListHP, memberListName);
+                //값을 함수에 넣어줌
+                addMember(memberListEmail, memberListHP, memberListName);
 
-//                clickToInnerProject();
+                Toast.makeText(context, "프로젝트의 새로운 멤버 "+memberListName+"!", Toast.LENGTH_SHORT).show();
+
+                ((InnerProject_AddMember)InnerProject_AddMember.mContext).finish(); //어댑터에서 액티비티 창을 닫음.
             }
         });
     }
@@ -107,28 +113,17 @@ public class InnerProject_AddMember_Adapter extends RecyclerView.Adapter<InnerPr
             this.tv_memberHP = itemView.findViewById(R.id.tv_memberHP);
         }
     }
+    //값을 파이어베이스 Realtime database로 넘기는 함수=================================================
+    public void addMember(String memberListEmail, String memberListHP, String memberListName) {
+        String projectName = ((InnerProject_AddMember)InnerProject_AddMember.mContext).projectName; //액티비티에 저장된 변수를 가져옴.
 
-    //리사이클러뷰 클릭시 InnerProject에 값을 줌========================================================
-//    public void clickToInnerProject() {
-//
-//        mDatabase.child(projectName).addListenerForSingleValueEvent(new ValueEventListener() {
-//
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//                Intent intent = new Intent(context, InnerProject.class);
-//                intent.putExtra("projectName", projectName);
-//                intent.putExtra("projectExplain", projectExplain);
-//                context.startActivity(intent);
-//
-//                return;
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
+        //DTO에서 선언했던 함수.
+        InnerProject_AddMemberDTO addMemberDTO = new InnerProject_AddMemberDTO(memberListEmail, memberListHP, memberListName);
+        Log.d("memberDTO", memberListEmail+memberListHP+memberListName);
+
+        //child는 해당 키 위치로 이동하는 함수입니다.
+        //키가 없는데 값을 지정한 경우 자동으로 생성합니다.
+        mDatabase.child("projectMemberList").child(projectName).child(memberListName).setValue(addMemberDTO);
+    }
 
 }

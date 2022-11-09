@@ -167,17 +167,25 @@ public class Join_Find extends AppCompatActivity {
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 myUid = snapshot.getKey();
                             }
-                            FirebaseAuth.getInstance().sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        showAlert("가입된 이메일로 비밀번호 재설정 링크가 전송되었습니다.", 1);
+
+                            String myId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                            if (myId != null) {
+                                FirebaseAuth.getInstance().sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            showAlert("가입된 이메일로 비밀번호 재설정 링크가 전송되었습니다.", 1);
+                                        }
+                                        else {
+                                            showAlert("요청한 작업을 수행할 수 없습니다.", 0);
+                                        }
                                     }
-                                    else {
-                                        showAlert("요청한 작업을 수행할 수 없습니다.", 0);
-                                    }
-                                }
-                            });
+                                });
+                            }
+                            else {
+                                showAlert("요청한 작업을 수행할 수 없습니다.", 0);
+                            }
                         }
                         else {
                             showAlert("등록되지 않은 이메일 입니다. 다시 시도해주세요.", 0);

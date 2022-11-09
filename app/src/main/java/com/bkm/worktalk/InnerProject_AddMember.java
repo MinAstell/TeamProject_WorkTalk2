@@ -1,5 +1,7 @@
 package com.bkm.worktalk;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -49,6 +51,9 @@ public class InnerProject_AddMember extends AppCompatActivity {
         this.memberListHP = memberListHP;
     }
 
+    public String projectName = ""; //프로젝트 이름 값 받아오는 변수
+    public static Context mContext; //프로젝트 이름 값 보내주는 context
+
     private RecyclerView rv_memberListToAdd;
 
     private ArrayList<InnerProject_AddMemberDTO> arrayList;
@@ -68,6 +73,13 @@ public class InnerProject_AddMember extends AppCompatActivity {
         rv_memberListToAdd.setLayoutManager(layoutManager);
         arrayList = new ArrayList<>();
 
+        //프로젝트 이름을 InnerProject에서 받아옴=======================================================
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        projectName = bundle.getString("projectName");
+        mContext = this; //oncreate 에 this(는 액티비티 클래스 자체를 의미) 할당
+
+        //파이어베이스================================================================================
         database = FirebaseDatabase.getInstance(); //파이어베이스 데이터베이스 연동
         databaseReference = database.getReference("dept"); //DB 테이블 연결
         databaseReference.child("서버개발팀").addListenerForSingleValueEvent(new ValueEventListener() {

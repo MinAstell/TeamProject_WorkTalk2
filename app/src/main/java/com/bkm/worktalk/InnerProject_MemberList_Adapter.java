@@ -13,7 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 
-public class InnerProject_Member_Adapter extends RecyclerView.Adapter<InnerProject_Member_Adapter.CustomViewHolder> {
+public class InnerProject_MemberList_Adapter extends RecyclerView.Adapter<InnerProject_MemberList_Adapter.CustomViewHolder> {
 
     private ArrayList<InnerProject_AddMemberDTO> arrayList;
     private Context context;
@@ -26,7 +26,8 @@ public class InnerProject_Member_Adapter extends RecyclerView.Adapter<InnerProje
 
     public DatabaseReference mDatabase;
 
-    public InnerProject_Member_Adapter(ArrayList<InnerProject_AddMemberDTO> arrayList, String memberListName, String memberListEmail, String memberListHP, Context context) {
+    public InnerProject_MemberList_Adapter(ArrayList<InnerProject_AddMemberDTO> arrayList, String memberListName,
+                                           String memberListEmail, String memberListHP, Context context) {
         this.arrayList = arrayList;
         this.memberListName = memberListName;
         this.memberListEmail = memberListEmail;
@@ -37,15 +38,15 @@ public class InnerProject_Member_Adapter extends RecyclerView.Adapter<InnerProje
     @NonNull
     @Override
     //실제 리스트뷰가 어댑터에 연결된 다음에 뷰 홀더를 최초로 만들어낸다.
-    public InnerProject_Member_Adapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public InnerProject_MemberList_Adapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_innerproject_addmember, parent, false);
-        InnerProject_Member_Adapter.CustomViewHolder holder = new InnerProject_Member_Adapter.CustomViewHolder(view);
+        InnerProject_MemberList_Adapter.CustomViewHolder holder = new InnerProject_MemberList_Adapter.CustomViewHolder(view);
 
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull InnerProject_Member_Adapter.CustomViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull InnerProject_MemberList_Adapter.CustomViewHolder holder, int position) {
         holder.tv_memberName.setText(arrayList.get(position).getName());
         holder.tv_memberEmail.setText(arrayList.get(position).getEmail());
         holder.tv_memberHP.setText(arrayList.get(position).getHp());
