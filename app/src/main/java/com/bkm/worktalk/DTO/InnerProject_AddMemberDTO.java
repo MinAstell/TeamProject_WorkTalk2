@@ -1,4 +1,4 @@
-package com.bkm.worktalk;
+package com.bkm.worktalk.DTO;
 
 public class InnerProject_AddMemberDTO {
 

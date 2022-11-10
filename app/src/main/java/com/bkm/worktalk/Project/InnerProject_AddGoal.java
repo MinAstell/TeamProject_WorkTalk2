@@ -1,8 +1,10 @@
-package com.bkm.worktalk;
+package com.bkm.worktalk.Project;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.bkm.worktalk.R;
 
 public class InnerProject_AddGoal  extends AppCompatActivity {
 

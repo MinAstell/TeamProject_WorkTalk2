@@ -1,4 +1,4 @@
-package com.bkm.worktalk;
+package com.bkm.worktalk.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bkm.worktalk.DTO.InnerProject_AddMemberDTO;
+import com.bkm.worktalk.R;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;

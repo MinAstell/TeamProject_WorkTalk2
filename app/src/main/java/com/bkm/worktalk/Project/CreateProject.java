@@ -1,4 +1,4 @@
-package com.bkm.worktalk;
+package com.bkm.worktalk.Project;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -9,6 +9,8 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bkm.worktalk.DTO.ProjectDTO;
+import com.bkm.worktalk.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
