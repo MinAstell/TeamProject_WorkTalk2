@@ -233,47 +233,12 @@
                     android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="무얼쓰면"
-                    android:textColor="#000000" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/btn_settings_user_wtf"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="75"
-                android:background="@drawable/rounded_box"
-                android:orientation="horizontal"
-                android:text="좋을까 젠장"
-                android:textColor="#000000"
-                android:textSize="18dp"></Button>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="10"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:paddingHorizontal="20dp"
-            android:paddingBottom="20dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="25"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="고객센터"
                     android:textColor="#000000" />
             </LinearLayout>
 
             <Button
-                android:id="@+id/btn_settings_user_help"
+                android:id="@+id/btn_settings_user_wtf"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="75"
@@ -297,7 +262,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="25"
-                android:orientation="horizontal"></LinearLayout>
+                android:orientation="horizontal"/>
 
             <Button
                 android:id="@+id/btn_settings_user_signout"
@@ -309,7 +274,17 @@
                 android:text="로그아웃"
                 android:textColor="#FF0000"
                 android:textSize="18dp"></Button>
+
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingBottom="20dp" />
 
         <LinearLayout
             android:layout_width="match_parent"

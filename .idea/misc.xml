@@ -61,6 +61,11 @@
         <entry key="..\:/Users/admin/Desktop/TeamProject_WorkTalk2-product/app/src/main/res/layout/activity_innerproject.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/admin/Desktop/TeamProject_WorkTalk2-product/app/src/main/res/layout/activity_innerproject_addgoal.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/admin/Desktop/TeamProject_WorkTalk2-product/app/src/main/res/layout/activity_innerproject_addmember.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/admin/Desktop/TeamProject_WorkTalk2/app/src/main/res/drawable-v24/rounded_box_bottom.xml" value="0.2775" />
+        <entry key="..\:/Users/admin/Desktop/TeamProject_WorkTalk2/app/src/main/res/drawable-v24/rounded_box_top.xml" value="0.2775" />
+        <entry key="..\:/Users/admin/Desktop/TeamProject_WorkTalk2/app/src/main/res/drawable/rounded_box.xml" value="0.2775" />
+        <entry key="..\:/Users/admin/Desktop/TeamProject_WorkTalk2/app/src/main/res/drawable/rounded_box_noLine.xml" value="0.2775" />
+        <entry key="..\:/Users/admin/Desktop/TeamProject_WorkTalk2/app/src/main/res/drawable/rounded_box_no_line.xml" value="0.2775" />
         <entry key="..\:/Users/admin/Desktop/TeamProject_WorkTalk2/app/src/main/res/layout/activity_chat_room.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/admin/Desktop/TeamProject_WorkTalk2/app/src/main/res/layout/activity_create_project.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/admin/Desktop/TeamProject_WorkTalk2/app/src/main/res/layout/activity_frag_project.xml" value="0.36614583333333334" />
@@ -76,6 +81,7 @@
         <entry key="..\:/Users/admin/Desktop/TeamProject_WorkTalk2/app/src/main/res/layout/activity_join_find.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/admin/Desktop/TeamProject_WorkTalk2/app/src/main/res/layout/activity_login.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/admin/Desktop/TeamProject_WorkTalk2/app/src/main/res/layout/chat_item.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/admin/Desktop/TeamProject_WorkTalk2/app/src/main/res/layout/chat_item_me.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/admin/Desktop/TeamProject_WorkTalk2/app/src/main/res/layout/item_innerproject_member.xml" value="0.3651041666666667" />
         <entry key="..\:/Users/admin/Desktop/TeamProject_WorkTalk2/app/src/main/res/layout/item_projectlist.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/admin/Desktop/TeamProject_WorkTalk2/app/src/main/res/layout/item_userlist.xml" value="0.36614583333333334" />
