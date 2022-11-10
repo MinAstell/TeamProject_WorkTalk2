@@ -37,7 +37,7 @@ public class Login extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
-    private SharedPreferences appData;
+    public static SharedPreferences appData;
 
     private static boolean chk_signOut = false;
 
