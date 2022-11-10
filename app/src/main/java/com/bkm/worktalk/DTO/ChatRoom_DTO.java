@@ -1,4 +1,4 @@
-package com.bkm.worktalk;
+package com.bkm.worktalk.DTO;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -1,15 +1,15 @@
-package com.bkm.worktalk;
+package com.bkm.worktalk.Fragment;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.bkm.worktalk.R;
 
 public class Fragment extends AppCompatActivity {
 

@@ -18,7 +18,7 @@
         android:theme="@style/Theme.Worktalk"
         tools:targetApi="31">
         <activity
-            android:name=".Logo"
+            android:name=".BeginApp.Logo"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,18 +26,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login" />
+        <activity android:name=".BeginApp.Login" />
         <activity android:name=".Join_Find" />
-        <activity android:name=".Fragment" />
-        <activity android:name=".CreateProject" />
-        <activity android:name=".InnerProject" />
+        <activity android:name=".Fragment.Fragment" />
+        <activity android:name=".Project.CreateProject" />
+        <activity android:name=".Project.InnerProject" />
         <activity
-            android:name=".InnerProject_AddGoal"
+            android:name=".Project.InnerProject_AddGoal"
             android:theme="@style/Theme.AppCompat.Transparent.NoActionBar" />
         <activity
-            android:name=".InnerProject_AddMember"
+            android:name=".Project.InnerProject_AddMember"
             android:theme="@style/Theme.AppCompat.Transparent.NoActionBar" />
-        <activity android:name=".InsertOnly"/>
         <activity android:name=".ChatRoom"/>
 
         <service android:name=".FirebaseMessagingService"

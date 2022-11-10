@@ -1,4 +1,4 @@
-package com.bkm.worktalk;
+package com.bkm.worktalk.Fragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.bkm.worktalk.R;
 
 public class FragTalk extends Fragment {
 

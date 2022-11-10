@@ -1,7 +1,6 @@
-package com.bkm.worktalk;
+package com.bkm.worktalk.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +11,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.bkm.worktalk.Project.InnerProject_AddMember;
+import com.bkm.worktalk.DTO.InnerProject_AddMemberDTO;
+import com.bkm.worktalk.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class InnerProject_AddMember_Adapter extends RecyclerView.Adapter<InnerProject_AddMember_Adapter.CustomViewHolder> {

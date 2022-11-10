@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    tools:context=".FragTalk">
+    tools:context=".Fragment.FragTalk">
 
     <LinearLayout
         android:layout_width="match_parent"

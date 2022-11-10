@@ -1,4 +1,4 @@
-package com.bkm.worktalk;
+package com.bkm.worktalk.Project;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,7 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.bkm.worktalk.Adapter.InnerProject_MemberList_Adapter;
+import com.bkm.worktalk.DTO.InnerProject_AddMemberDTO;
+import com.bkm.worktalk.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,6 +24,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class InnerProject extends AppCompatActivity {
 
@@ -61,11 +63,14 @@ public class InnerProject extends AppCompatActivity {
     private ImageButton ib_addGoal; //누르면 목표생성 창이 뜸.
     private ImageButton ib_addMember; //누르면 멤버추가 창이 뜸.
 
+    private Button btn_connChatroom;
+
     private RecyclerView rv_goalList; //목표 리스트 리사이클러뷰
     private RecyclerView rv_memberList; //멤버 리스트 리사이클러뷰
 
     private InnerProject_MemberList_Adapter memberAdapter;
     private ArrayList<InnerProject_AddMemberDTO> memberArrayList;
+    private ArrayList<String> memberListToChatRoom;
     private RecyclerView.LayoutManager layoutManager;
 
     public String projectName = ""; //프로젝트 이름 값 받아오는 변수
@@ -73,6 +78,7 @@ public class InnerProject extends AppCompatActivity {
 
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +88,7 @@ public class InnerProject extends AppCompatActivity {
         tv_innerProjectName = findViewById(R.id.tv_innerProjectName); //프로젝트 이름
         tv_innerProjectExplainOpened = findViewById(R.id.tv_innerProjectExplainOpened); //열린 프로젝트 설명
         tv_innerProjectExplainClosed = findViewById(R.id.tv_innerProjectExplainClosed); //닫힌 프로젝트 설명
+        btn_connChatroom = findViewById(R.id.btn_connChatroom);
 
         findViewById(R.id.ib_addGoal).setOnClickListener(mClickListener);//누르면 목표생성 창이 뜸.
         findViewById(R.id.ib_addMember).setOnClickListener(mClickListener);//누르면 멤버추가 창이 뜸.
@@ -104,6 +111,15 @@ public class InnerProject extends AppCompatActivity {
         tv_innerProjectName.setText(projectName);
         tv_innerProjectExplainOpened.setText(projectExplain);
         tv_innerProjectExplainClosed.setText(projectExplain);
+
+        // 채팅방으로 버튼 작업 (누르면 채팅방 생성 및 이동기능) : 백경민 작업
+        btn_connChatroom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("버튼", "버튼눌림");
+                enterToChatRoom();
+            }
+        });
 
         //닫힌 프로젝트 설명 클릭시 프로젝트가 열림=======================================================
         tv_innerProjectExplainClosed.setOnClickListener(new View.OnClickListener() {
@@ -167,4 +183,42 @@ public class InnerProject extends AppCompatActivity {
         }
     };
 
+    // 채팅방 생성 및 이동기능을 가진 메소드 : 백경민 작업
+    // 현재 리사이클러뷰 리스트가 갱신이 되지 않는 관계로 디비데이터 다시 끌어오도록 작업했습니다.
+    public void enterToChatRoom() {
+        databaseReference.child(projectName).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getChildrenCount() > 0) {
+                    HashMap<String, Object> map = new HashMap<>();
+                    memberArrayList.clear();
+                    Log.d("리스너", "들어옴");
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Log.d("리스너 안 for문", "들어옴");
+                        InnerProject_AddMemberDTO memberDTO = snapshot.getValue(InnerProject_AddMemberDTO.class);
+                        Log.d("memberDTO", memberDTO.email);
+                        memberArrayList.add(memberDTO);
+                    }
+                    databaseReference2 = database.getReference("test");
+                    int count = 0;
+                    while (count != memberArrayList.size()) {
+                        Log.d("count", String.valueOf(count));
+                        Log.d("memberArrayList", memberArrayList.get(count).getName());
+                        map.clear();
+                        map.put(memberArrayList.get(count).getName(), memberArrayList.get(count).getEmail());
+                        Log.d("map", memberArrayList.get(count).getEmail());
+                        Log.d("map", memberArrayList.get(count).getName());
+                        databaseReference2.push().updateChildren(map);
+                        Log.d("제발", "들어옴");
+                        ++count;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 }

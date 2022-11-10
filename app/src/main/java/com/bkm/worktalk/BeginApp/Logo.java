@@ -1,11 +1,12 @@
-package com.bkm.worktalk;
+package com.bkm.worktalk.BeginApp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
+
+import com.bkm.worktalk.R;
 
 public class Logo extends AppCompatActivity {
 

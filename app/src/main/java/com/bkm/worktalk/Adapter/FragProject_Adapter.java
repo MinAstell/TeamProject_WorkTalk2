@@ -1,4 +1,4 @@
-package com.bkm.worktalk;
+package com.bkm.worktalk.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bkm.worktalk.Project.InnerProject;
+import com.bkm.worktalk.DTO.ProjectDTO;
+import com.bkm.worktalk.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
