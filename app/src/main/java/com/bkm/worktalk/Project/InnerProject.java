@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bkm.worktalk.Adapter.InnerProject_MemberList_Adapter;
+import com.bkm.worktalk.BeginApp.Login;
 import com.bkm.worktalk.DTO.InnerProject_AddMemberDTO;
 import com.bkm.worktalk.R;
 import com.google.firebase.database.DataSnapshot;
@@ -79,6 +80,7 @@ public class InnerProject extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private DatabaseReference databaseReference2;
+    private DatabaseReference databaseReference3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,28 +192,47 @@ public class InnerProject extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getChildrenCount() > 0) {
-                    HashMap<String, Object> map = new HashMap<>();
-                    memberArrayList.clear();
-                    Log.d("리스너", "들어옴");
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Log.d("리스너 안 for문", "들어옴");
-                        InnerProject_AddMemberDTO memberDTO = snapshot.getValue(InnerProject_AddMemberDTO.class);
-                        Log.d("memberDTO", memberDTO.email);
-                        memberArrayList.add(memberDTO);
-                    }
-                    databaseReference2 = database.getReference("test");
-                    int count = 0;
-                    while (count != memberArrayList.size()) {
-                        Log.d("count", String.valueOf(count));
-                        Log.d("memberArrayList", memberArrayList.get(count).getName());
-                        map.clear();
-                        map.put(memberArrayList.get(count).getName(), memberArrayList.get(count).getEmail());
-                        Log.d("map", memberArrayList.get(count).getEmail());
-                        Log.d("map", memberArrayList.get(count).getName());
-                        databaseReference2.push().updateChildren(map);
-                        Log.d("제발", "들어옴");
-                        ++count;
-                    }
+                    databaseReference2 = database.getReference("chatRoom");
+                    databaseReference2.child(projectName).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
+                            if (dataSnapshot2.getChildrenCount() > 0) {
+                                return;
+                            }
+                            HashMap<String, Object> map = new HashMap<>();
+                            memberArrayList.clear();
+                            Log.d("리스너", "들어옴");
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                Log.d("리스너 안 for문", "들어옴");
+                                InnerProject_AddMemberDTO memberDTO = snapshot.getValue(InnerProject_AddMemberDTO.class);
+                                Log.d("memberDTO", memberDTO.email);
+                                memberArrayList.add(memberDTO);
+                            }
+                            databaseReference2 = database.getReference("chatRoom");
+                            String myUid = Login.appData.getString("myUid", "");
+                            databaseReference3 = database.getReference("eachUserChatRoomInfo");
+                            int count = 0;
+                            while (count != memberArrayList.size()) {
+                                Log.d("count", String.valueOf(count));
+                                Log.d("memberArrayList", memberArrayList.get(count).getName());
+                                map.clear();
+                                map.put(memberArrayList.get(count).getName(), memberArrayList.get(count).getEmail());
+                                Log.d("map", memberArrayList.get(count).getEmail());
+                                Log.d("map", memberArrayList.get(count).getName());
+                                databaseReference2.child(projectName).child("Users").updateChildren(map);
+                                Log.d("제발", "들어옴");
+                                ++count;
+                            }
+                            map.clear();
+                            map.put("chatRoomPath", projectName);
+                            databaseReference3.child(myUid).push().updateChildren(map);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
             }
 

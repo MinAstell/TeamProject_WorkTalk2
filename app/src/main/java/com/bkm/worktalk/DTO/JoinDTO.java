@@ -1,5 +1,7 @@
 package com.bkm.worktalk.DTO;
 
+import java.util.HashMap;
+
 public class JoinDTO {
 
     public String emailId;
