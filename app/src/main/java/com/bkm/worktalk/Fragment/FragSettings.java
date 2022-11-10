@@ -51,7 +51,6 @@ public class FragSettings extends Fragment {
         btn_settings_user_edit = view.findViewById(R.id.btn_settings_user_edit);
         btn_settings_user_alarm = view.findViewById(R.id.btn_settings_user_alarm);
         btn_settings_user_wtf = view.findViewById(R.id.btn_settings_user_wtf);
-        btn_settings_user_help = view.findViewById(R.id.btn_settings_user_help);
         btn_settings_user_signout = view.findViewById(R.id.btn_settings_user_signout);
         btn_settings_user_delete = view.findViewById(R.id.btn_settings_user_delete);
 
