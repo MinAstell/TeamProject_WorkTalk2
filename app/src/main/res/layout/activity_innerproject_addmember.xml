@@ -23,10 +23,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            android:background="#FFFFFF"
+            android:background="@drawable/rounded_box_no_line"
             android:orientation="vertical"
-            android:paddingVertical="5dp"
-            android:paddingHorizontal="10dp">
+            android:paddingHorizontal="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,7 +45,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="새 멤버 추가"
+                        android:text="프로젝트 멤버 추가"
                         android:textColor="#000000"
                         android:textSize="16dp"
                         android:textStyle="bold" />
@@ -79,7 +80,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="85"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="5dp">
 
                         <EditText
                             android:id="@+id/et_searchMemberToAdd"
@@ -105,7 +107,7 @@
 
                     <LinearLayout
                         android:layout_width="270dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="2dp"
                         android:background="#808080"
                         android:orientation="horizontal"></LinearLayout>
                 </LinearLayout>
@@ -115,7 +117,9 @@
                     android:layout_height="0dp"
                     android:layout_weight="85"
                     android:background="#F1F1F1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingHorizontal="5dp"
+                    android:paddingTop="5dp">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_memberListToAdd"
