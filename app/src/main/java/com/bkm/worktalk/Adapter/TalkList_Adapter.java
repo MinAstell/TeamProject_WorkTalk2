@@ -68,6 +68,8 @@ public class TalkList_Adapter extends RecyclerView.Adapter<TalkList_Adapter.Cust
         Glide.with(holder.itemView.getContext()).load(R.drawable.profile_simple).apply(new RequestOptions().circleCrop()).into(holder.iv_userProfile);
 
         holder.tv_userName.setText(arrayList.get(position));
+        holder.tv_userEmail.setText(arrayList.get(position));
+        holder.tv_userHp.setText(arrayList.get(position));
 
         holder.itemView.setTag(position);
 

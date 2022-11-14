@@ -355,7 +355,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:ems="10"
-                            android:hint="부서"
+                            android:hint="서버개발팀"
                             android:inputType="textPersonName"
                             android:textColor="#000000"
                             android:textColorHint="#808080" />
