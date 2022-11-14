@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bkm.worktalk.BeginApp.Login;
 import com.bkm.worktalk.ChatRoom;
+import com.bkm.worktalk.DTO.ChatRoom_DTO;
 import com.bkm.worktalk.DTO.TalkListsDTO;
 import com.bkm.worktalk.DTO.UserListsDTO;
 import com.bkm.worktalk.R;
@@ -37,6 +40,7 @@ public class TalkList_Adapter extends RecyclerView.Adapter<TalkList_Adapter.Cust
 
     public DatabaseReference mDatabase;
     public DatabaseReference databaseReference;
+    public DatabaseReference databaseReference2;
 
     private ArrayList<String> arrayList;
     private Context context;
@@ -67,19 +71,17 @@ public class TalkList_Adapter extends RecyclerView.Adapter<TalkList_Adapter.Cust
 
         Glide.with(holder.itemView.getContext()).load(R.drawable.profile_simple).apply(new RequestOptions().circleCrop()).into(holder.iv_userProfile);
 
+//        holder.iv_userProfile.setColorFilter(null);
+
         holder.tv_userName.setText(arrayList.get(position));
-        holder.tv_userEmail.setText(arrayList.get(position));
-        holder.tv_userHp.setText(arrayList.get(position));
 
         holder.itemView.setTag(position);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                opponent = holder.tv_userName.getText().toString();
-//
-//                Log.d("myName, teamUser", myName + ", " + opponent);
-//                chatRoomPathChk(opponent);
+                opponent = holder.tv_userName.getText().toString();
+                chatRoomPathChk(opponent);
             }
         });
     }
@@ -120,86 +122,122 @@ public class TalkList_Adapter extends RecyclerView.Adapter<TalkList_Adapter.Cust
         }
     }
 
-//    public void chatRoomPathChk(String opponent) {
-//        databaseReference = FirebaseDatabase.getInstance().getReference("eachUserChatRoomInfo");
-//
-//        mDatabase.child(myName+"_"+opponent).addListenerForSingleValueEvent(new ValueEventListener() {
-//
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//                if(dataSnapshot.getChildrenCount() > 0) {
-//
-//                    chatRoomPath = myName+"_"+opponent;
-//
-//                    Intent intent = new Intent(context, ChatRoom.class);
-//                    intent.putExtra("chatRoomPath", chatRoomPath);
-//                    intent.putExtra("myUid", myUid);
-//                    intent.putExtra("myName", myName);
-//                    intent.putExtra("friendName", opponent);
-//                    context.startActivity(intent);
-//
-//                    return;
-//                }
-//                else {
-//
-//                    mDatabase.child(opponent+"_"+myName).addListenerForSingleValueEvent(new ValueEventListener() {
-//
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//                            if(dataSnapshot.getChildrenCount() > 0) {
-//
-//                                chatRoomPath = opponent+"_"+myName;
-//
-//                                Intent intent = new Intent(context, ChatRoom.class);
-//                                intent.putExtra("chatRoomPath", chatRoomPath);
-//                                intent.putExtra("myUid", myUid);
-//                                intent.putExtra("myName", myName);
-//                                intent.putExtra("friendName", opponent);
-//                                context.startActivity(intent);
-//
-//                                return;
-//                            }
-//                            else {
-//
-//                                long now = System.currentTimeMillis();
-//                                Date date = new Date(now);
-//                                SimpleDateFormat dateFormat = new SimpleDateFormat("MM월 dd일 hh:mm");
-//                                String getTime = dateFormat.format(date);
-//
-//                                Map<String, Object> map = new HashMap<>();
-//                                Map<String, Object> map2 = new HashMap<>();
-//                                map.put("createdTime", getTime);
-//                                map2.put("opponent", opponent);
-//
-//                                mDatabase.child(myName + "_" + opponent).push().setValue(map);
-//                                databaseReference.child(myUid).push().updateChildren(map2);
-//                                chatRoomPath = myName + "_" + opponent;
-//
-//                                Intent intent = new Intent(context, ChatRoom.class);
-//                                intent.putExtra("chatRoomPath", chatRoomPath);
-//                                intent.putExtra("myName", myName);
-//                                intent.putExtra("myUid", myUid);
-//                                intent.putExtra("friendName", opponent);
-//                                context.startActivity(intent);
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError error) {
-//
-//                        }
-//                    });
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//    }
+    public void chatRoomPathChk(String opponent) {
+        databaseReference2 = FirebaseDatabase.getInstance().getReference("projectList");
+        databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getChildrenCount() > 0) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Log.d("key", snapshot.getKey());
+                        if(opponent.equals(snapshot.getKey())) {
+                            SharedPreferences.Editor editor = Login.appData.edit();
+                            editor.putString("프로젝트여부", "y");
+                            editor.apply();
+                            Intent intent = new Intent(context, ChatRoom.class);
+                            intent.putExtra("chatRoomPath", opponent);
+                            context.startActivity(intent);
+                            return;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        String myName = Login.appData.getString("myName", "");
+        databaseReference = FirebaseDatabase.getInstance().getReference("eachUserChatRoomInfo");
+
+        mDatabase.child(myName+"_"+opponent).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.getChildrenCount() > 0) {
+
+                    chatRoomPath = myName+"_"+opponent;
+
+                    SharedPreferences.Editor editor = Login.appData.edit();
+                    editor.putString("프로젝트여부", "n");
+                    editor.apply();
+                    Intent intent = new Intent(context, ChatRoom.class);
+                    intent.putExtra("chatRoomPath", chatRoomPath);
+                    intent.putExtra("myUid", myUid);
+                    intent.putExtra("myName", myName);
+                    intent.putExtra("friendName", opponent);
+                    context.startActivity(intent);
+
+                    return;
+                }
+                else {
+
+                    mDatabase.child(opponent+"_"+myName).addListenerForSingleValueEvent(new ValueEventListener() {
+
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            if(dataSnapshot.getChildrenCount() > 0) {
+
+                                chatRoomPath = opponent+"_"+myName;
+
+                                SharedPreferences.Editor editor = Login.appData.edit();
+                                editor.putString("프로젝트여부", "n");
+                                editor.apply();
+                                Intent intent = new Intent(context, ChatRoom.class);
+                                intent.putExtra("chatRoomPath", chatRoomPath);
+                                intent.putExtra("myUid", myUid);
+                                intent.putExtra("myName", myName);
+                                intent.putExtra("friendName", opponent);
+                                context.startActivity(intent);
+
+                                return;
+                            }
+                            else {
+
+                                long now = System.currentTimeMillis();
+                                Date date = new Date(now);
+                                SimpleDateFormat dateFormat = new SimpleDateFormat("MM월 dd일 hh:mm");
+                                String getTime = dateFormat.format(date);
+
+                                Map<String, Object> map = new HashMap<>();
+                                Map<String, Object> map2 = new HashMap<>();
+                                map.put("createdTime", getTime);
+                                map2.put("opponent", opponent);
+
+                                mDatabase.child(myName + "_" + opponent).push().setValue(map);
+                                databaseReference.child(myUid).push().updateChildren(map2);
+                                chatRoomPath = myName + "_" + opponent;
+
+                                SharedPreferences.Editor editor = Login.appData.edit();
+                                editor.putString("프로젝트여부", "n");
+                                editor.apply();
+                                Intent intent = new Intent(context, ChatRoom.class);
+                                intent.putExtra("chatRoomPath", chatRoomPath);
+                                intent.putExtra("myName", myName);
+                                intent.putExtra("myUid", myUid);
+                                intent.putExtra("friendName", opponent);
+                                context.startActivity(intent);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     public void showAlert(String msg) {    // 다이얼로그 창 띄우는 메서드
         AlertDialog.Builder builder = new AlertDialog.Builder(this.context);
