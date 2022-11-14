@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bkm.worktalk.Adapter.ChatRoom_Adapter;
+import com.bkm.worktalk.BeginApp.Login;
 import com.bkm.worktalk.DTO.ChatRoom_DTO;
 import com.bkm.worktalk.DTO.JoinDTO;
 import com.bkm.worktalk.DTO.NotificationModel;
@@ -38,7 +39,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
 
 public class ChatRoom extends AppCompatActivity {
 
@@ -87,15 +87,24 @@ public class ChatRoom extends AppCompatActivity {
         etComments = (EditText) findViewById(R.id.etComments);
         tv_friendName = (TextView) findViewById(R.id.tv_friendName);
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+        // 프로젝트방 / 개인방 구별해서 채팅방 바인딩 작업부터 시작!
+       if(Login.appData.getString("프로젝트여부", "").equals("n")) {
+            Intent intent = getIntent();
+            Bundle bundle = intent.getExtras();
+            chatRoomPath = bundle.getString("chatRoomPath");
+            myName = bundle.getString("myName");
+            friendName = bundle.getString("friendName");
+            myUid = bundle.getString("myUid");
 
-        chatRoomPath = bundle.getString("chatRoomPath");
-        myName = bundle.getString("myName");
-        friendName = bundle.getString("friendName");
-        myUid = bundle.getString("myUid");
+            tv_friendName.setText(friendName);
+        }
+        else if(Login.appData.getString("프로젝트여부", "").equals("y")) {
+            Intent intent = getIntent();
+            Bundle bundle = intent.getExtras();
+            chatRoomPath = bundle.getString("chatRoomPath");
 
-        tv_friendName.setText(friendName);
+            tv_friendName.setText(chatRoomPath);
+        }
 
 //        getMyProfileImage();
 
