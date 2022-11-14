@@ -34,12 +34,13 @@ import java.util.Map;
 public class UsersList_Adapter extends RecyclerView.Adapter<UsersList_Adapter.CustomViewHolder> {
 
     public DatabaseReference mDatabase;
+    public DatabaseReference databaseReference;
 
     private ArrayList<UserListsDTO> arrayList;
     private Context context;
     private String myName;
     private String myUid;
-    private String teamUser;
+    private String opponent;
     private String chatRoomPath;
 
     public UsersList_Adapter(ArrayList<UserListsDTO> arrayList, String myUid, String myName, Context context) {
@@ -75,10 +76,10 @@ public class UsersList_Adapter extends RecyclerView.Adapter<UsersList_Adapter.Cu
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                teamUser = holder.tv_userName.getText().toString();
+                opponent = holder.tv_userName.getText().toString();
 
-                Log.d("myName, teamUser", myName + ", " + teamUser);
-                chatRoomPathChk();
+                Log.d("myName, teamUser", myName + ", " + opponent);
+                chatRoomPathChk(opponent);
             }
         });
     }
@@ -119,42 +120,43 @@ public class UsersList_Adapter extends RecyclerView.Adapter<UsersList_Adapter.Cu
         }
     }
 
-    public void chatRoomPathChk() {
+    public void chatRoomPathChk(String opponent) {
+        databaseReference = FirebaseDatabase.getInstance().getReference("eachUserChatRoomInfo");
 
-        mDatabase.child(myName+"_"+teamUser).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child(myName+"_"+opponent).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 if(dataSnapshot.getChildrenCount() > 0) {
 
-                    chatRoomPath = myName+"_"+teamUser;
+                    chatRoomPath = myName+"_"+opponent;
 
                     Intent intent = new Intent(context, ChatRoom.class);
                     intent.putExtra("chatRoomPath", chatRoomPath);
                     intent.putExtra("myUid", myUid);
                     intent.putExtra("myName", myName);
-                    intent.putExtra("friendName", teamUser);
+                    intent.putExtra("friendName", opponent);
                     context.startActivity(intent);
 
                     return;
                 }
                 else {
 
-                    mDatabase.child(teamUser+"_"+myName).addListenerForSingleValueEvent(new ValueEventListener() {
+                    mDatabase.child(opponent+"_"+myName).addListenerForSingleValueEvent(new ValueEventListener() {
 
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                             if(dataSnapshot.getChildrenCount() > 0) {
 
-                                chatRoomPath = teamUser+"_"+myName;
+                                chatRoomPath = opponent+"_"+myName;
 
                                 Intent intent = new Intent(context, ChatRoom.class);
                                 intent.putExtra("chatRoomPath", chatRoomPath);
                                 intent.putExtra("myUid", myUid);
                                 intent.putExtra("myName", myName);
-                                intent.putExtra("friendName", teamUser);
+                                intent.putExtra("friendName", opponent);
                                 context.startActivity(intent);
 
                                 return;
@@ -167,16 +169,19 @@ public class UsersList_Adapter extends RecyclerView.Adapter<UsersList_Adapter.Cu
                                 String getTime = dateFormat.format(date);
 
                                 Map<String, Object> map = new HashMap<>();
+                                Map<String, Object> map2 = new HashMap<>();
                                 map.put("createdTime", getTime);
+                                map2.put("opponent", opponent);
 
-                                mDatabase.child(myName + "_" + teamUser).push().setValue(map);
-                                chatRoomPath = myName + "_" + teamUser;
+                                mDatabase.child(myName + "_" + opponent).push().setValue(map);
+                                databaseReference.child(myUid).push().updateChildren(map2);
+                                chatRoomPath = myName + "_" + opponent;
 
                                 Intent intent = new Intent(context, ChatRoom.class);
                                 intent.putExtra("chatRoomPath", chatRoomPath);
                                 intent.putExtra("myName", myName);
                                 intent.putExtra("myUid", myUid);
-                                intent.putExtra("friendName", teamUser);
+                                intent.putExtra("friendName", opponent);
                                 context.startActivity(intent);
                             }
                         }

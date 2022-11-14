@@ -165,7 +165,6 @@ public class InnerProject extends AppCompatActivity {
         memberAdapter = new InnerProject_MemberList_Adapter(memberArrayList, getMemberListName(),
                 getMemberListEmail(), getMemberListHP(), getApplicationContext());
         rv_memberList.setAdapter(memberAdapter); //리사이클러뷰에 어댑터 연결
-
     }
     //버튼 이벤트====================================================================================
     Button.OnClickListener mClickListener = new Button.OnClickListener() {
@@ -216,10 +215,10 @@ public class InnerProject extends AppCompatActivity {
                                 Log.d("count", String.valueOf(count));
                                 Log.d("memberArrayList", memberArrayList.get(count).getName());
                                 map.clear();
-                                map.put(memberArrayList.get(count).getName(), memberArrayList.get(count).getEmail());
+                                map.put("userEmail", memberArrayList.get(count).getEmail());
                                 Log.d("map", memberArrayList.get(count).getEmail());
                                 Log.d("map", memberArrayList.get(count).getName());
-                                databaseReference2.child(projectName).child("Users").updateChildren(map);
+                                databaseReference2.child(projectName).push().updateChildren(map);
                                 Log.d("제발", "들어옴");
                                 ++count;
                             }

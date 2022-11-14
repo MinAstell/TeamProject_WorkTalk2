@@ -38,6 +38,7 @@
             android:name=".Project.InnerProject_AddMember"
             android:theme="@style/Theme.AppCompat.Transparent.NoActionBar" />
         <activity android:name=".ChatRoom"/>
+        <activity android:name=".UserModify"/>
 
         <service android:name=".FirebaseMessagingService"
             android:exported="true"
