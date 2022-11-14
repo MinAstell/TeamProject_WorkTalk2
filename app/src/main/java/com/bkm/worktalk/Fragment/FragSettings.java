@@ -18,6 +18,7 @@ import android.widget.ImageView;
 
 import com.bkm.worktalk.BeginApp.Login;
 import com.bkm.worktalk.R;
+import com.bkm.worktalk.UserModify;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
@@ -67,7 +68,6 @@ public class FragSettings extends Fragment {
                 Intent i = new Intent(getActivity(), Login.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
-
             }
         });
         btn_settings_profile_photo_change.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +77,14 @@ public class FragSettings extends Fragment {
                 Intent intent = new Intent(Intent.ACTION_PICK);  // 사진 가져오기(앨범)
                 intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
                 startActivityForResult(intent, PICK_FROM_ALBUM);
+            }
+        });
+        btn_settings_user_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), UserModify.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
         return view;
@@ -96,29 +104,10 @@ public class FragSettings extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_FROM_ALBUM) {
-            iv_settings_profile_photo_change.setImageURI(data.getData());  // 프로필 뷰를 바꿈
-            Glide.with(this).load(data.getData()).apply(new RequestOptions().circleCrop().diskCacheStrategy(DiskCacheStrategy.NONE)).into(iv_settings_profile_photo_change);
+//            iv_settings_profile_photo_change.setImageURI(data.getData());  // 프로필 뷰를 바꿈
+            Glide.with(this).load(data.getData()).apply(new RequestOptions().skipMemoryCache(true).circleCrop().diskCacheStrategy(DiskCacheStrategy.NONE)).into(iv_settings_profile_photo_change);
             //Glide.with(this).load(img).diskCacheStrategy(DiskCacheStrategy.NONE).into(product_img_imageview);
             uri = data.getData();  // 이미지 경로원본
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

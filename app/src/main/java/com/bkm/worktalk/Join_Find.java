@@ -297,7 +297,7 @@ public class Join_Find extends AppCompatActivity {
                                                 // Get new FCM registration token
                                                 String token = task.getResult();
 
-                                                JoinDTO joinDTO = new JoinDTO(email, rePw, name, emp, hp, dept, job, token);
+                                                JoinDTO joinDTO = new JoinDTO(email, rePw, name, emp, hp, dept, job, token, "");
 
                                                 mDatabase.child(myUid).setValue(joinDTO);
                                             }
