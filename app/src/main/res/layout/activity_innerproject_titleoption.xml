@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_titleOption"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:text="프로젝트 설정"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7">
+
+        <EditText
+            android:id="@+id/et_changeProjectName"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="90"
+            android:backgroundTint="#808080"
+            android:ems="10"
+            android:hint="프로젝트 제목 (최대 20글자)"
+            android:inputType="textPersonName"
+            android:maxLength="20"
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:id="@+id/ib_clearProjectName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="7dp"
+            android:layout_weight="10"
+            android:background="@android:color/transparent"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="8dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/btn_all_del" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="90"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginTop="10dp"
+            android:paddingHorizontal="7dp">
+
+            <EditText
+                android:id="@+id/et_changeProjectExplain"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#434343"
+                android:ems="10"
+                android:gravity="top"
+                android:hint="프로젝트 설명 (최대 300글자)"
+                android:inputType="textMultiLine"
+                android:maxLength="300"
+                android:textSize="13sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="85"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="15"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="90"
+                        android:orientation="vertical"></LinearLayout>
+
+                    <ImageButton
+                        android:id="@+id/ib_clearProjectExplain"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="10"
+                        android:background="@android:color/transparent"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/btn_all_del" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_changeProject"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:text="프로젝트 변경" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

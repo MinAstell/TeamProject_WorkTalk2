@@ -3,20 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="45dp"
+    android:layout_height="46dp"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/iv_memberProfile"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="10"
-            android:padding="5dp"
-            tools:srcCompat="@tools:sample/avatars" />
+        android:layout_height="45dp">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -35,16 +27,18 @@
                     android:id="@+id/tv_memberName"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="40"
+                    android:layout_weight="35"
                     android:gravity="bottom"
                     android:text="멤버 이름"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:textColor="#000000" />
 
                 <TextView
                     android:id="@+id/tv_memberHP"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="60"
+                    android:layout_weight="65"
                     android:gravity="bottom|right"
                     android:paddingRight="5dp"
                     android:text="01012341234"
@@ -62,4 +56,11 @@
                 android:textSize="13sp" />
         </LinearLayout>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#5E5E5E"
+        android:orientation="vertical"></LinearLayout>
+
 </LinearLayout>

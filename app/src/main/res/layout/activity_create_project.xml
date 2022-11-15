@@ -4,6 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/textviewtitle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:text="새 프로젝트"
+        android:textSize="15sp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -35,63 +45,13 @@
             android:layout_marginLeft="7dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="7dp"
-            android:background="@null"
+            android:background="#434343"
             android:ems="10"
             android:gravity="top"
             android:hint="프로젝트 설명 (최대 300글자)"
             android:inputType="textMultiLine"
             android:maxLength="300"
             android:textSize="13sp" />
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="프로젝트 타이틀"
-            android:textSize="14sp" />
-
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/radio_projectImage1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:checked="true"
-                android:drawableRight="@drawable/test_icon_customize"
-                android:paddingRight="45dp" />
-
-            <RadioButton
-                android:id="@+id/radio_projectImage2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:checked="false"
-                android:drawableRight="@drawable/test_icon_customize"
-                android:paddingRight="45dp" />
-
-            <RadioButton
-                android:id="@+id/radio_projectImage3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:checked="false"
-                android:drawableRight="@drawable/test_icon_customize"
-                android:paddingRight="45dp" />
-
-            <RadioButton
-                android:id="@+id/radio_projectImage4"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:checked="false"
-                android:drawableRight="@drawable/test_icon_customize"
-                android:paddingRight="45dp" />
-
-        </RadioGroup>
 
         <LinearLayout
             android:layout_width="match_parent"
