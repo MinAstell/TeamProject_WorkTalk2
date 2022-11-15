@@ -66,6 +66,7 @@ public class ChatRoom extends AppCompatActivity {
     public String friendToken = "";
     public String friendUid = "";
     private String chatRoomPath2 = "";
+    private int chkProject = 0;
 
     ArrayList<JoinDTO> friendTokenList = new ArrayList<>();
     ArrayList<String> userTokens = new ArrayList<>();
@@ -117,6 +118,7 @@ public class ChatRoom extends AppCompatActivity {
             Log.d("myName", myName);
 
             tv_friendName.setText(chatRoomPath2);
+            chkProject = 1;
         }
 
 //        Log.d("채팅방경로", chatRoomPath);
@@ -135,10 +137,18 @@ public class ChatRoom extends AppCompatActivity {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
+                        ChatRoom_DTO.Comment2 comment2 = snapshot.getValue(ChatRoom_DTO.Comment2.class);
                         ChatRoom_DTO.Comment comment = snapshot.getValue(ChatRoom_DTO.Comment.class);
 
-                        if (comment.createdTime.equals("")) {
-                            arrayList.add(comment);
+                        if(chkProject == 1) {
+                            if (comment2.userEmail.equals("")) {
+                                arrayList.add(comment);
+                            }
+                        }
+                        else if(chkProject == 0) {
+                            if(comment.createdTime.equals("")) {
+                                arrayList.add(comment);
+                            }
                         }
                     }
 
@@ -174,7 +184,7 @@ public class ChatRoom extends AppCompatActivity {
 //                comment.userProfileImageUrl = myProfileImageUrl;
                 comment.timestamp = getTime;
 
-                mDatabase.child(chatRoomPath).push().setValue(comment);
+                mDatabase.child(chatRoomPath2).push().setValue(comment);
 
                 pushMsg();
 
@@ -184,8 +194,8 @@ public class ChatRoom extends AppCompatActivity {
     }
 
     public void getLead() {
-
-        mDatabase.child(chatRoomPath).addListenerForSingleValueEvent(new ValueEventListener() {
+        Log.d("chatRoomPath", chatRoomPath2);
+        mDatabase.child(chatRoomPath2).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -194,11 +204,12 @@ public class ChatRoom extends AppCompatActivity {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
-                        ChatRoom_DTO.Comment comment = snapshot.getValue(ChatRoom_DTO.Comment.class);
+                        ChatRoom_DTO.Comment2 comment2 = snapshot.getValue(ChatRoom_DTO.Comment2.class);
 
 //                        Log.d("chatRoom", comment.createdTime);
+                        Log.d("userEmail", comment2.userEmail);
 
-                        if (comment.createdTime.equals("")) {
+                        if (comment2.userEmail.equals("")) {
 
                             Map<String, Object> map = new HashMap<>();
                             map.clear();
@@ -229,7 +240,7 @@ public class ChatRoom extends AppCompatActivity {
         mDatabase2 = FirebaseDatabase.getInstance().getReference("UserInfo");
 
         if(Login.appData.getString("프로젝트여부", "").equals("y")) {
-            mDatabase.child(chatRoomPath).addListenerForSingleValueEvent(new ValueEventListener() {
+            mDatabase.child(chatRoomPath2).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if(dataSnapshot.getChildrenCount() > 0) {
@@ -273,7 +284,7 @@ public class ChatRoom extends AppCompatActivity {
                             notificationModel.data.title = "보낸 사람 : " + myName;
                             notificationModel.data.body = myComment;
                             notificationModel.data.sendingUser = myName;
-                            notificationModel.data.chatRoomPath = chatRoomPath;
+                            notificationModel.data.chatRoomPath = chatRoomPath2;
                             notificationModel.data.receiver = userName.get(i);
                             notificationModel.data.receiverUid = userUid.get(i);
 
@@ -339,7 +350,7 @@ public class ChatRoom extends AppCompatActivity {
                     notificationModel.data.title = "보낸 사람 : " + myName;
                     notificationModel.data.body = myComment;
                     notificationModel.data.sendingUser = myName;
-                    notificationModel.data.chatRoomPath = chatRoomPath;
+                    notificationModel.data.chatRoomPath = chatRoomPath2;
                     notificationModel.data.receiver = friendName;
                     notificationModel.data.receiverUid = friendUid;
 
@@ -407,7 +418,7 @@ public class ChatRoom extends AppCompatActivity {
             notificationModel.data.title = "보낸 사람 : " + myName;
             notificationModel.data.body = myComment;
             notificationModel.data.sendingUser = myName;
-            notificationModel.data.chatRoomPath = chatRoomPath;
+            notificationModel.data.chatRoomPath = chatRoomPath2;
             notificationModel.data.receiver = userName.get(i);
             notificationModel.data.receiverUid = userUid.get(i);
 
