@@ -136,6 +136,7 @@ public class TalkList_Adapter extends RecyclerView.Adapter<TalkList_Adapter.Cust
                             editor.apply();
                             Intent intent = new Intent(context, ChatRoom.class);
                             intent.putExtra("chatRoomPath", opponent);
+                            intent.putExtra("myUid", myUid);
                             context.startActivity(intent);
                             return;
                         }
