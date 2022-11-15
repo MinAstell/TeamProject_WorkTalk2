@@ -71,6 +71,10 @@ public class FragTalk extends Fragment {
                         Log.d("값", talkListsDTO.toString());
                     }
 
+                    for(int i=0; i<talkList.size(); i++) {
+                        Log.d("talkList", talkList.get(i));
+                    }
+
                     TalkList_Adapter talkListAdapter = new TalkList_Adapter(talkList, myUid, getContext());
                     rv_talkList.setAdapter(talkListAdapter);
                 }
