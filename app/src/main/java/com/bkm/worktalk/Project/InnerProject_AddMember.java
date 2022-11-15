@@ -4,14 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.bkm.worktalk.Adapter.InnerProject_AddMember_Adapter;
-import com.bkm.worktalk.DTO.InnerProject_AddMemberDTO;
 import com.bkm.worktalk.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -62,6 +63,8 @@ public class InnerProject_AddMember extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
 
+    private SwipeRefreshLayout srl_addmemberList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,9 +80,25 @@ public class InnerProject_AddMember extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         projectName = bundle.getString("projectName");
-        mContext = this; //oncreate 에 this(는 액티비티 클래스 자체를 의미) 할당
+        mContext = this; //oncreate 에 this(=액티비티 클래스 자체를 의미) 할당
 
         //파이어베이스================================================================================
+        addMemberLoad();
+
+        //스와이프 리플레쉬 레이아웃====================================================================
+        srl_addmemberList = findViewById(R.id.srl_addmemberList);
+        srl_addmemberList.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                addMemberLoad();
+                srl_addmemberList.setRefreshing(false); //새로고침을 멈추는 용도
+            }
+        });
+
+    }
+
+    //파이어베이스 DB에서 멤버 정보 가져오기=============================================================
+    public void addMemberLoad() {
         database = FirebaseDatabase.getInstance(); //파이어베이스 데이터베이스 연동
         databaseReference = database.getReference("dept"); //DB 테이블 연결
         databaseReference.child("서버개발팀").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -101,9 +120,10 @@ public class InnerProject_AddMember extends AppCompatActivity {
                 Log.e("Fraglike", String.valueOf(databaseError.toException())); // 에러문 출력
             }
         });
+        adapter = new InnerProject_AddMember_Adapter(arrayList, getMemberListName(), getMemberListEmail(),
+                getMemberListHP(), getApplicationContext());
+        rv_memberListToAdd.setAdapter(adapter); //리사이클러뷰에 어댑터
 
-        adapter = new InnerProject_AddMember_Adapter(arrayList, getMemberListName(), getMemberListEmail(), getMemberListHP(), getApplicationContext());
-        rv_memberListToAdd.setAdapter(adapter); //리사이클러뷰에 어댑터 연결
     }
 
 }

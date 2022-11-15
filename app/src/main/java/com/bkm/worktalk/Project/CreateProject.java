@@ -9,22 +9,24 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bkm.worktalk.DTO.ProjectDTO;
 import com.bkm.worktalk.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 public class CreateProject extends AppCompatActivity {
 
     //파이어베이스 데이터베이스 연동
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-
     //데이터베이스의 특정 위치로 연결
     private DatabaseReference databaseReference = database.getReference();
+    private ArrayList<ProjectDTO> arrayList = new ArrayList<>();
+    private FragProject_Adapter adapter;
 
-    Button btn_createProject; //프로젝트 생성 버튼
-    EditText et_createProjectName; //프로젝트 이름
-    EditText et_createProjectExplain; //프로젝트 설명
+    private Button btn_createProject; //프로젝트 생성 버튼
+    private EditText et_createProjectName; //프로젝트 이름
+    private EditText et_createProjectExplain; //프로젝트 설명
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +47,20 @@ public class CreateProject extends AppCompatActivity {
                     return;
                 }
                 //에딧 텍스트 값을 문자열로 바꾸어 함수에 넣어줌
-                addProject(et_createProjectName.getText().toString(), et_createProjectExplain.getText().toString());
+                addProject(et_createProjectName.getText().toString(), et_createProjectExplain.getText().toString(),
+                        et_createProjectName.getText().toString());
 
                 showAlert("프로젝트가 생성되었습니다.", 1);
+
+                FragProject fragProject = new FragProject();
             }
         });
     }
+
     //값을 파이어베이스 Realtime database로 넘기는 함수=================================================
-    public void addProject(String projectName, String ProjectExplain) {
+    public void addProject(String projectName, String ProjectExplain, String ProjectNameForChange) {
         //DTO에서 선언했던 함수.
-        ProjectDTO projectDTO = new ProjectDTO(projectName, ProjectExplain);
+        ProjectDTO projectDTO = new ProjectDTO(projectName, ProjectExplain, ProjectNameForChange);
 
         //child는 해당 키 위치로 이동하는 함수입니다.
         //키가 없는데 값을 지정한 경우 자동으로 생성합니다.
@@ -76,4 +82,5 @@ public class CreateProject extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
 }
