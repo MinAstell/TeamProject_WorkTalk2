@@ -20,23 +20,24 @@
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/btn_all_del" />
 
-        <ImageView
-            android:id="@+id/iv_innerProjectImage"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="10"
-            android:paddingHorizontal="4dp"
-            android:paddingVertical="4dp"
-            app:srcCompat="@drawable/ic_launcher_background" />
-
         <TextView
             android:id="@+id/tv_innerProjectName"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="90"
+            android:layout_weight="65"
             android:gravity="center_vertical"
             android:text="프로젝트 이름"
             android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/btn_deleteProject"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="25"
+            android:text="프로젝트 삭제"
+            android:textColor="#F32617"
+            android:textSize="12sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -66,33 +67,33 @@
                         android:id="@+id/textView10"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="65"
+                        android:layout_weight="85"
                         android:gravity="center_vertical"
-                        android:paddingLeft="10dp"
+                        android:paddingLeft="15dp"
                         android:text="프로젝트 목표"
                         android:textSize="16sp" />
-
-                    <Spinner
-                        android:id="@+id/spinner"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="25" />
 
                     <ImageButton
                         android:id="@+id/ib_addGoal"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="10"
+                        android:layout_weight="15"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         app:srcCompat="@drawable/project_new" />
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_goalList"
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:id="@+id/srl_goalList"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="45" />
+                    android:layout_weight="42">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_goalList"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -105,33 +106,34 @@
                         android:id="@+id/textView9"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="65"
+                        android:layout_weight="85"
                         android:gravity="center_vertical"
-                        android:paddingLeft="10dp"
+                        android:paddingLeft="15dp"
                         android:text="프로젝트 멤버"
                         android:textSize="16sp" />
-
-                    <Spinner
-                        android:id="@+id/spinner2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="25" />
 
                     <ImageButton
                         android:id="@+id/ib_addMember"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="10"
+                        android:layout_weight="15"
                         android:background="@android:color/transparent"
                         android:scaleType="fitCenter"
                         app:srcCompat="@drawable/users_new" />
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_memberList"
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:id="@+id/srl_memberList"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="42" />
+                    android:layout_weight="45">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_memberList"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="42" />
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -157,6 +159,7 @@
                 android:layout_marginLeft="7dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="7dp"
+                android:background="#FFFFFF"
                 android:text="프로젝트"
                 android:textColor="#000000"
                 android:textSize="13sp" />

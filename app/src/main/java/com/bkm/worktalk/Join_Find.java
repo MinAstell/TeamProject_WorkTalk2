@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -29,10 +30,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Join_Find extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
+    private DatabaseReference databaseReference;
     private FirebaseAuth mAuth;
 
     private String myUid;
@@ -91,6 +94,7 @@ public class Join_Find extends AppCompatActivity {
         String text = intent.getStringExtra("0");
 
         mDatabase = FirebaseDatabase.getInstance().getReference("UserInfo");
+        databaseReference = FirebaseDatabase.getInstance().getReference("dept");
         mAuth = FirebaseAuth.getInstance();
 
         et_mail = (EditText) findViewById(R.id.et_mail);
@@ -297,9 +301,14 @@ public class Join_Find extends AppCompatActivity {
                                                 // Get new FCM registration token
                                                 String token = task.getResult();
 
-                                                JoinDTO joinDTO = new JoinDTO(email, rePw, name, emp, hp, dept, job, token);
+                                                JoinDTO joinDTO = new JoinDTO(email, rePw, name, emp, hp, dept, job, token, "");
 
                                                 mDatabase.child(myUid).setValue(joinDTO);
+                                                HashMap<String, Object> map = new HashMap<>();
+                                                map.put("email", email);
+                                                map.put("hp", hp);
+                                                map.put("name", name);
+                                                databaseReference.child("서버개발팀").push().setValue(map);
                                             }
                                         });
 

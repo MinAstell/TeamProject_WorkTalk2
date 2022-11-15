@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +16,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bkm.worktalk.BeginApp.Login;
 import com.bkm.worktalk.ChatRoom;
-import com.bkm.worktalk.R;
+import com.bkm.worktalk.DTO.ChatRoom_DTO;
+import com.bkm.worktalk.DTO.TalkListsDTO;
 import com.bkm.worktalk.DTO.UserListsDTO;
+import com.bkm.worktalk.R;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.firebase.database.DataSnapshot;
@@ -31,21 +36,20 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UsersList_Adapter extends RecyclerView.Adapter<UsersList_Adapter.CustomViewHolder> {
+public class TalkList_Adapter extends RecyclerView.Adapter<TalkList_Adapter.CustomViewHolder> {
 
     public DatabaseReference mDatabase;
     public DatabaseReference databaseReference;
+    public DatabaseReference databaseReference2;
 
-    private ArrayList<UserListsDTO> arrayList;
+    private ArrayList<String> arrayList;
     private Context context;
-    private String myName;
     private String myUid;
     private String opponent;
     private String chatRoomPath;
 
-    public UsersList_Adapter(ArrayList<UserListsDTO> arrayList, String myUid, String myName, Context context) {
+    public TalkList_Adapter(ArrayList<String> arrayList, String myUid, Context context) {
         this.arrayList = arrayList;
-        this.myName = myName;
         this.context = context;
         this.myUid = myUid;
     }
@@ -54,7 +58,7 @@ public class UsersList_Adapter extends RecyclerView.Adapter<UsersList_Adapter.Cu
     @Override
     public CustomViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_userlist, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chatroomlist, parent, false);
         CustomViewHolder holder = new CustomViewHolder(view);
 
         mDatabase = FirebaseDatabase.getInstance().getReference("chatRoom");
@@ -67,9 +71,9 @@ public class UsersList_Adapter extends RecyclerView.Adapter<UsersList_Adapter.Cu
 
         Glide.with(holder.itemView.getContext()).load(R.drawable.profile_simple).apply(new RequestOptions().circleCrop()).into(holder.iv_userProfile);
 
-        holder.tv_userName.setText(arrayList.get(position).name);
-        holder.tv_userHp.setText(arrayList.get(position).hp);
-        holder.tv_userEmail.setText(arrayList.get(position).email);
+//        holder.iv_userProfile.setColorFilter(null);
+
+        holder.tv_userName.setText(arrayList.get(position));
 
         holder.itemView.setTag(position);
 
@@ -77,8 +81,6 @@ public class UsersList_Adapter extends RecyclerView.Adapter<UsersList_Adapter.Cu
             @Override
             public void onClick(View view) {
                 opponent = holder.tv_userName.getText().toString();
-
-                Log.d("myName, teamUser", myName + ", " + opponent);
                 chatRoomPathChk(opponent);
             }
         });
@@ -121,6 +123,34 @@ public class UsersList_Adapter extends RecyclerView.Adapter<UsersList_Adapter.Cu
     }
 
     public void chatRoomPathChk(String opponent) {
+        databaseReference2 = FirebaseDatabase.getInstance().getReference("projectList");
+        databaseReference2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getChildrenCount() > 0) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Log.d("key", snapshot.getKey());
+                        if(opponent.equals(snapshot.getKey())) {
+                            SharedPreferences.Editor editor = Login.appData.edit();
+                            editor.putString("프로젝트여부", "y");
+                            editor.apply();
+                            Intent intent = new Intent(context, ChatRoom.class);
+                            intent.putExtra("chatRoomPath", opponent);
+                            intent.putExtra("myUid", myUid);
+                            context.startActivity(intent);
+                            return;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        String myName = Login.appData.getString("myName", "");
         databaseReference = FirebaseDatabase.getInstance().getReference("eachUserChatRoomInfo");
 
         mDatabase.child(myName+"_"+opponent).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -132,6 +162,9 @@ public class UsersList_Adapter extends RecyclerView.Adapter<UsersList_Adapter.Cu
 
                     chatRoomPath = myName+"_"+opponent;
 
+                    SharedPreferences.Editor editor = Login.appData.edit();
+                    editor.putString("프로젝트여부", "n");
+                    editor.apply();
                     Intent intent = new Intent(context, ChatRoom.class);
                     intent.putExtra("chatRoomPath", chatRoomPath);
                     intent.putExtra("myUid", myUid);
@@ -152,6 +185,9 @@ public class UsersList_Adapter extends RecyclerView.Adapter<UsersList_Adapter.Cu
 
                                 chatRoomPath = opponent+"_"+myName;
 
+                                SharedPreferences.Editor editor = Login.appData.edit();
+                                editor.putString("프로젝트여부", "n");
+                                editor.apply();
                                 Intent intent = new Intent(context, ChatRoom.class);
                                 intent.putExtra("chatRoomPath", chatRoomPath);
                                 intent.putExtra("myUid", myUid);
@@ -177,6 +213,9 @@ public class UsersList_Adapter extends RecyclerView.Adapter<UsersList_Adapter.Cu
                                 databaseReference.child(myUid).push().updateChildren(map2);
                                 chatRoomPath = myName + "_" + opponent;
 
+                                SharedPreferences.Editor editor = Login.appData.edit();
+                                editor.putString("프로젝트여부", "n");
+                                editor.apply();
                                 Intent intent = new Intent(context, ChatRoom.class);
                                 intent.putExtra("chatRoomPath", chatRoomPath);
                                 intent.putExtra("myName", myName);

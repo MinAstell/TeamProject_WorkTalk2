@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bkm.worktalk.Adapter.ChatRoom_Adapter;
+import com.bkm.worktalk.BeginApp.Login;
 import com.bkm.worktalk.DTO.ChatRoom_DTO;
 import com.bkm.worktalk.DTO.JoinDTO;
 import com.bkm.worktalk.DTO.NotificationModel;
@@ -38,7 +39,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
 
 public class ChatRoom extends AppCompatActivity {
 
@@ -67,6 +67,10 @@ public class ChatRoom extends AppCompatActivity {
     public String friendUid = "";
 
     ArrayList<JoinDTO> friendTokenList = new ArrayList<>();
+    ArrayList<String> userTokens = new ArrayList<>();
+    ArrayList<String> userEmail = new ArrayList<>();
+    ArrayList<String> userName = new ArrayList<>();
+    ArrayList<String> userUid = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,15 +91,26 @@ public class ChatRoom extends AppCompatActivity {
         etComments = (EditText) findViewById(R.id.etComments);
         tv_friendName = (TextView) findViewById(R.id.tv_friendName);
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
+        // 프로젝트방 / 개인방 구별해서 채팅방 바인딩 작업부터 시작!
+       if(Login.appData.getString("프로젝트여부", "").equals("n")) {
+            Intent intent = getIntent();
+            Bundle bundle = intent.getExtras();
+            chatRoomPath = bundle.getString("chatRoomPath");
+            myName = bundle.getString("myName");
+            friendName = bundle.getString("friendName");
+            myUid = bundle.getString("myUid");
 
-        chatRoomPath = bundle.getString("chatRoomPath");
-        myName = bundle.getString("myName");
-        friendName = bundle.getString("friendName");
-        myUid = bundle.getString("myUid");
+            tv_friendName.setText(friendName);
+        }
+        else if(Login.appData.getString("프로젝트여부", "").equals("y")) {
+            Intent intent = getIntent();
+            Bundle bundle = intent.getExtras();
+            chatRoomPath = bundle.getString("chatRoomPath");
+            myUid = bundle.getString("myUid");
+            myName = Login.appData.getString("myName", "");
 
-        tv_friendName.setText(friendName);
+            tv_friendName.setText(chatRoomPath);
+        }
 
 //        getMyProfileImage();
 
@@ -204,6 +219,31 @@ public class ChatRoom extends AppCompatActivity {
 
         mDatabase2 = FirebaseDatabase.getInstance().getReference("UserInfo");
 
+        if(Login.appData.getString("프로젝트여부", "").equals("y")) {
+            mDatabase.child(chatRoomPath).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.getChildrenCount() > 0) {
+                        userEmail.clear();
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            ChatRoom_DTO.Comment2 comment2 = snapshot.getValue(ChatRoom_DTO.Comment2.class);
+                            if(!comment2.userEmail.equals("")) {
+                                userEmail.add(comment2.userEmail);
+                            }
+                        }
+                        getForUserTokenToAlarm();
+                        return;
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+
+        // 개인방일 때 기능
         mDatabase2.orderByChild("name").equalTo(friendName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -266,6 +306,66 @@ public class ChatRoom extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void getForUserTokenToAlarm() {
+        mDatabase2 = FirebaseDatabase.getInstance().getReference("UserInfo");
+        userTokens.clear();
+        userName.clear();
+        userUid.clear();
+        for(int i=0; i<userEmail.size(); i++) {
+            mDatabase2.orderByChild("emailId").equalTo(userEmail.get(i)).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.getChildrenCount() > 0) {
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                            JoinDTO joinDTO = snapshot.getValue(JoinDTO.class);
+                            userTokens.add(joinDTO.token);
+                            userName.add(joinDTO.name);
+                            userUid.add(snapshot.getKey());
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+
+        for(int i=0; i<userTokens.size(); i++) {
+            Gson gson = new Gson();
+            NotificationModel notificationModel = new NotificationModel();
+            notificationModel.to = userTokens.get(i);
+            notificationModel.data.title = "보낸 사람 : " + myName;
+            notificationModel.data.body = myComment;
+            notificationModel.data.sendingUser = myName;
+            notificationModel.data.chatRoomPath = chatRoomPath;
+            notificationModel.data.receiver = userName.get(i);
+            notificationModel.data.receiverUid = userUid.get(i);
+
+            RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf8"), gson.toJson(notificationModel));
+            Request request = new Request.Builder()
+                    .header("Content-Type", "application/json")
+                    .addHeader("Authorization", "key=AAAAT31oZAs:APA91bFxIff62TJ_bv0amJJ-I6LuYdNL13ATpy8EAY-3MyzljI2DVymZbmWuU1VuDCpClzDXO3_xEDG5dkRolTSlddvTnsEVqDETrXHURNUeTd-1q3Uz5iMxLMv-mt63ICyd8AnItUmB")
+                    .url("https://fcm.googleapis.com/fcm/send")
+                    .post(requestBody)
+                    .build();
+
+            OkHttpClient okHttpClient = new OkHttpClient();
+            okHttpClient.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    Log.d("post", "error");
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    Log.d("post", "success");
+                }
+            });
+        }
     }
 
     public void getMyProfileImage() {  // 나중에 수정

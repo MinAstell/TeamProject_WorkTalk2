@@ -31,13 +31,21 @@
         <activity android:name=".Fragment.Fragment" />
         <activity android:name=".Project.CreateProject" />
         <activity android:name=".Project.InnerProject" />
+        <activity android:name=".Project.InnerProject_TitleOption" />
         <activity
             android:name=".Project.InnerProject_AddGoal"
+            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar" />
+        <activity
+            android:name=".Project.InnerProject_InnerGoal"
+            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar" />
+        <activity
+            android:name=".Project.InnerProject_UpdateGoal"
             android:theme="@style/Theme.AppCompat.Transparent.NoActionBar" />
         <activity
             android:name=".Project.InnerProject_AddMember"
             android:theme="@style/Theme.AppCompat.Transparent.NoActionBar" />
         <activity android:name=".ChatRoom"/>
+        <activity android:name=".UserModify"/>
 
         <service android:name=".FirebaseMessagingService"
             android:exported="true"

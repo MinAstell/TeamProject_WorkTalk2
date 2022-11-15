@@ -61,7 +61,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         // 버전이 높아져서 pendingIntent getActivity 파라미터에 PendingIntent.FLAG_MUTABLE를 꼭 써줘야 함.
         // 예전 소스에는 이 부분이 없어서 구버전 폰에서는 잘 됐지만, 신버전 폰일 경우 앱이 꺼지는 문제가 있었음.
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), notificationIntent, PendingIntent.FLAG_MUTABLE);
 
         // 1. 알림 메시지를 관리하는 notificationManager 객체 추출

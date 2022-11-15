@@ -12,12 +12,13 @@ public class JoinDTO {
     public String deptno;
     public String job;
     public String token;
+    public String profileImageUrl;
 
     public JoinDTO() {
 
     }
 
-    public JoinDTO(String emailId, String pw, String name, String empno, String hp, String deptno, String job, String token) {
+    public JoinDTO(String emailId, String pw, String name, String empno, String hp, String deptno, String job, String token, String profileImageUrl) {
         this.emailId = emailId;
         this.pw = pw;
         this.name = name;
@@ -26,5 +27,6 @@ public class JoinDTO {
         this.deptno = deptno;
         this.job = job;
         this.token = token;
+        this.profileImageUrl = profileImageUrl;
     }
 }

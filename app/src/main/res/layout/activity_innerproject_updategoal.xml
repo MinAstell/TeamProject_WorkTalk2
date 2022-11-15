@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"></LinearLayout>
+
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="45"
+            android:orientation="vertical"></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:background="@drawable/rounded_box_no_line"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_updateGoalTitle"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="10dp"
+                android:text="프로젝트 목표 수정"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="10"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/et_updateGoalName"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="90"
+                    android:background="@null"
+                    android:ems="10"
+                    android:gravity="center_vertical"
+                    android:hint="목표명(20자 이내)"
+                    android:inputType="textPersonName"
+                    android:maxLength="20"
+                    android:paddingHorizontal="10dp"
+                    android:textColor="#000000"
+                    android:textColorHint="#787878"
+                    android:textSize="15sp" />
+
+                <ImageButton
+                    android:id="@+id/ib_clearUpdateGoalName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="10"
+                    android:background="@android:color/transparent"
+                    android:paddingHorizontal="5dp"
+                    android:paddingVertical="5dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/btn_all_del" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="75">
+
+                <EditText
+                    android:id="@+id/et_updateGoalExplain"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:ems="10"
+                    android:gravity="top"
+                    android:hint="프로젝트 내용 및 설명(300자 이내)"
+                    android:inputType="textMultiLine"
+                    android:maxLength="300"
+                    android:paddingHorizontal="10dp"
+                    android:paddingTop="10dp"
+                    android:textColor="#000000"
+                    android:textColorHint="#787878"
+                    android:textSize="13sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="85"
+                        android:orientation="vertical"></LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="15"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="90"
+                            android:orientation="vertical"></LinearLayout>
+
+                        <ImageButton
+                            android:id="@+id/ib_clearUpdateGoalExplain"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="10"
+                            android:background="@android:color/transparent"
+                            android:paddingHorizontal="5dp"
+                            android:paddingVertical="5dp"
+                            android:scaleType="fitCenter"
+                            app:srcCompat="@drawable/btn_all_del" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/btn_updateGoal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="10"
+                android:text="목표 수정" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="55"
+            android:orientation="vertical">
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"></LinearLayout>
+</LinearLayout>
