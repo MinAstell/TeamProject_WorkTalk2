@@ -137,6 +137,7 @@ public class Login extends AppCompatActivity {
                                         editor.putString("myUid", myUid);
                                         editor.putString("myName", joinDTO.name);
                                         editor.putString("myDept", joinDTO.deptno);
+                                        editor.putString("emailId", joinDTO.emailId);
                                         editor.apply();
 
                                         FirebaseMessaging.getInstance().getToken()

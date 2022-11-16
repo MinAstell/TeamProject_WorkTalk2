@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.bkm.worktalk.BeginApp.Login;
+import com.bkm.worktalk.DTO.JoinDTO;
 import com.bkm.worktalk.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -31,6 +33,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class InnerProject extends AppCompatActivity {
 
@@ -122,14 +125,19 @@ public class InnerProject extends AppCompatActivity {
     public static Context mContext; //프로젝트 이름 값 보내주는 context
 
     private FirebaseDatabase database;
+    private DatabaseReference mDatabase;
     private DatabaseReference databaseReference;
     private DatabaseReference databaseReference1;
     private DatabaseReference databaseReferenceProject;
     private DatabaseReference databaseReferenceGoal;
     private DatabaseReference databaseReferenceMember;
+    private DatabaseReference databaseReference2;
+    private DatabaseReference databaseReference3;
 
     private SwipeRefreshLayout srl_goalList; //프로젝트 목표 리사이클러뷰 레이아웃 새로고침
     private SwipeRefreshLayout srl_memberList; //프로젝트 멤버 리사이클러뷰 레이아웃 새로고침
+
+    private Button btn_connChatroom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +152,7 @@ public class InnerProject extends AppCompatActivity {
         findViewById(R.id.btn_deleteProject).setOnClickListener(mClickListener); //프로젝트 삭제 버튼
         findViewById(R.id.ib_addGoal).setOnClickListener(mClickListener); //누르면 목표생성 창이 뜸.
         findViewById(R.id.ib_addMember).setOnClickListener(mClickListener); //누르면 멤버추가 창이 뜸.
+        btn_connChatroom = findViewById(R.id.btn_connChatroom);
 
         rv_goalList = findViewById(R.id.rv_goalList); //목표 리스트 리사이클러뷰
         rv_memberList = findViewById(R.id.rv_memberList); //멤버 리스트 리사이클러뷰
@@ -162,6 +171,15 @@ public class InnerProject extends AppCompatActivity {
 
         //프로젝트 이름, 설명의 값을 가져옴=============================================================
         getData();
+
+        // 채팅방으로 버튼 작업 (누르면 채팅방 생성 및 이동기능) : 백경민 작업
+        btn_connChatroom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("버튼", "버튼눌림");
+                enterToChatRoom();
+            }
+        });
 
         //프로젝트 이름 터치시 이름 및 설명 변경 창이 뜸.=================================================
         tv_innerProjectName.setOnClickListener(new View.OnClickListener() {
@@ -372,4 +390,89 @@ public class InnerProject extends AppCompatActivity {
         rv_memberList.setAdapter(memberAdapter); //리사이클러뷰에 어댑터 연결
     }
 
+    // 채팅방 생성 및 이동기능을 가진 메소드 : 백경민 작업
+    // 현재 리사이클러뷰 리스트가 갱신이 되지 않는 관계로 디비데이터 다시 끌어오도록 작업했습니다.
+    public void enterToChatRoom() {
+        databaseReference = database.getReference("projectMemberList");
+        databaseReference.child(projectName).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getChildrenCount() > 0) {
+                    databaseReference2 = database.getReference("chatRoom");
+                    databaseReference2.child(projectName).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
+                            if (dataSnapshot2.getChildrenCount() > 0) {
+                                return;
+                            }
+                            HashMap<String, Object> map = new HashMap<>();
+                            memberArrayList.clear();
+                            Log.d("리스너", "들어옴");
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                Log.d("리스너 안 for문", "들어옴");
+                                InnerProject_AddMemberDTO memberDTO = snapshot.getValue(InnerProject_AddMemberDTO.class);
+                                Log.d("memberDTO", memberDTO.email);
+                                memberArrayList.add(memberDTO);
+                            }
+                            databaseReference2 = database.getReference("chatRoom");
+                            String myUid = Login.appData.getString("myUid", "");
+                            databaseReference3 = database.getReference("eachUserChatRoomInfo");
+                            int count = 0;
+                            while (count != memberArrayList.size()) {
+                                Log.d("count", String.valueOf(count));
+                                Log.d("memberArrayList", memberArrayList.get(count).getName());
+                                map.clear();
+                                map.put("userEmail", memberArrayList.get(count).getEmail());
+                                Log.d("map", memberArrayList.get(count).getEmail());
+                                Log.d("map", memberArrayList.get(count).getName());
+                                databaseReference2.child(projectName).push().updateChildren(map);
+                                Log.d("제발", "들어옴");
+                                ++count;
+                            }
+                            map.clear();
+                            map.put("chatRoomPath", projectName);
+                            databaseReference3.child(myUid).push().updateChildren(map);
+
+                            for(int i=0; i<memberArrayList.size(); i++) {
+                                mDatabase = FirebaseDatabase.getInstance().getReference("UserInfo");
+
+                                if(Login.appData.getString("emailId", "").equals(memberArrayList.get(i).email)) {
+
+                                }
+                                else {
+                                    mDatabase.orderByChild("emailId").equalTo(memberArrayList.get(i).email).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            if(dataSnapshot.getChildrenCount() > 0) {
+                                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                    map.clear();
+                                                    map.put("chatRoomPath", projectName);
+                                                    databaseReference3.child(snapshot.getKey()).push().updateChildren(map);
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 }

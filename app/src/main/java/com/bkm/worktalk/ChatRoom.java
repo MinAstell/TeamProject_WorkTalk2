@@ -61,10 +61,12 @@ public class ChatRoom extends AppCompatActivity {
 
     public String myName = "";
     public String myUid = "";
-    public String chatRoomPath = "";
+    private String chatRoomPath = "";
     public String myComment;
     public String friendToken = "";
     public String friendUid = "";
+    private String chatRoomPath2 = "";
+    private int chkProject = 0;
 
     ArrayList<JoinDTO> friendTokenList = new ArrayList<>();
     ArrayList<String> userTokens = new ArrayList<>();
@@ -91,30 +93,39 @@ public class ChatRoom extends AppCompatActivity {
         etComments = (EditText) findViewById(R.id.etComments);
         tv_friendName = (TextView) findViewById(R.id.tv_friendName);
 
+//        Log.d("프젝여부", Login.appData.getString("프로젝트여부", ""));
+
         // 프로젝트방 / 개인방 구별해서 채팅방 바인딩 작업부터 시작!
-       if(Login.appData.getString("프로젝트여부", "").equals("n")) {
+       if(Login.appData.getString("projectCheck", "").equals("n")) {
             Intent intent = getIntent();
             Bundle bundle = intent.getExtras();
-            chatRoomPath = bundle.getString("chatRoomPath");
+            chatRoomPath2 = bundle.getString("chatRoomPath");
             myName = bundle.getString("myName");
             friendName = bundle.getString("friendName");
             myUid = bundle.getString("myUid");
 
             tv_friendName.setText(friendName);
+           Log.d("chatRoom2", "하이1");
         }
-        else if(Login.appData.getString("프로젝트여부", "").equals("y")) {
+        else if(Login.appData.getString("projectCheck", "").equals("y")) {
             Intent intent = getIntent();
             Bundle bundle = intent.getExtras();
-            chatRoomPath = bundle.getString("chatRoomPath");
+            chatRoomPath2 = bundle.getString("chatRoomPath");
             myUid = bundle.getString("myUid");
             myName = Login.appData.getString("myName", "");
+            Log.d("chatRoom2", chatRoomPath2);
+            Log.d("myUid", myUid);
+            Log.d("myName", myName);
 
-            tv_friendName.setText(chatRoomPath);
+            tv_friendName.setText(chatRoomPath2);
+            chkProject = 1;
         }
+
+//        Log.d("채팅방경로", chatRoomPath);
 
 //        getMyProfileImage();
 
-        valueEventListener = mDatabase.child(chatRoomPath).addValueEventListener(new ValueEventListener() {
+        valueEventListener = mDatabase.child(chatRoomPath2).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -126,10 +137,18 @@ public class ChatRoom extends AppCompatActivity {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
+                        ChatRoom_DTO.Comment2 comment2 = snapshot.getValue(ChatRoom_DTO.Comment2.class);
                         ChatRoom_DTO.Comment comment = snapshot.getValue(ChatRoom_DTO.Comment.class);
 
-                        if (comment.createdTime.equals("")) {
-                            arrayList.add(comment);
+                        if(chkProject == 1) {
+                            if (comment2.userEmail.equals("")) {
+                                arrayList.add(comment);
+                            }
+                        }
+                        else if(chkProject == 0) {
+                            if(comment.createdTime.equals("")) {
+                                arrayList.add(comment);
+                            }
                         }
                     }
 
@@ -165,7 +184,7 @@ public class ChatRoom extends AppCompatActivity {
 //                comment.userProfileImageUrl = myProfileImageUrl;
                 comment.timestamp = getTime;
 
-                mDatabase.child(chatRoomPath).push().setValue(comment);
+                mDatabase.child(chatRoomPath2).push().setValue(comment);
 
                 pushMsg();
 
@@ -175,8 +194,8 @@ public class ChatRoom extends AppCompatActivity {
     }
 
     public void getLead() {
-
-        mDatabase.child(chatRoomPath).addListenerForSingleValueEvent(new ValueEventListener() {
+        Log.d("chatRoomPath", chatRoomPath2);
+        mDatabase.child(chatRoomPath2).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -185,11 +204,12 @@ public class ChatRoom extends AppCompatActivity {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
-                        ChatRoom_DTO.Comment comment = snapshot.getValue(ChatRoom_DTO.Comment.class);
+                        ChatRoom_DTO.Comment2 comment2 = snapshot.getValue(ChatRoom_DTO.Comment2.class);
 
-                        Log.d("chatRoom", comment.createdTime);
+//                        Log.d("chatRoom", comment.createdTime);
+                        Log.d("userEmail", comment2.userEmail);
 
-                        if (comment.createdTime.equals("")) {
+                        if (comment2.userEmail.equals("")) {
 
                             Map<String, Object> map = new HashMap<>();
                             map.clear();
@@ -220,7 +240,7 @@ public class ChatRoom extends AppCompatActivity {
         mDatabase2 = FirebaseDatabase.getInstance().getReference("UserInfo");
 
         if(Login.appData.getString("프로젝트여부", "").equals("y")) {
-            mDatabase.child(chatRoomPath).addListenerForSingleValueEvent(new ValueEventListener() {
+            mDatabase.child(chatRoomPath2).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if(dataSnapshot.getChildrenCount() > 0) {
@@ -231,7 +251,64 @@ public class ChatRoom extends AppCompatActivity {
                                 userEmail.add(comment2.userEmail);
                             }
                         }
-                        getForUserTokenToAlarm();
+
+                        mDatabase2 = FirebaseDatabase.getInstance().getReference("UserInfo");
+                        userTokens.clear();
+                        userName.clear();
+                        userUid.clear();
+                        for(int i=0; i<userEmail.size(); i++) {
+                            mDatabase2.orderByChild("emailId").equalTo(userEmail.get(i)).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if(dataSnapshot.getChildrenCount() > 0) {
+                                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                            JoinDTO joinDTO = snapshot.getValue(JoinDTO.class);
+                                            userTokens.add(joinDTO.token);
+                                            userName.add(joinDTO.name);
+                                            userUid.add(snapshot.getKey());
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
+
+                        for(int i=0; i<userTokens.size(); i++) {
+                            Gson gson = new Gson();
+                            NotificationModel notificationModel = new NotificationModel();
+                            notificationModel.to = userTokens.get(i);
+                            notificationModel.data.title = "보낸 사람 : " + myName;
+                            notificationModel.data.body = myComment;
+                            notificationModel.data.sendingUser = myName;
+                            notificationModel.data.chatRoomPath = chatRoomPath2;
+                            notificationModel.data.receiver = userName.get(i);
+                            notificationModel.data.receiverUid = userUid.get(i);
+
+                            RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf8"), gson.toJson(notificationModel));
+                            Request request = new Request.Builder()
+                                    .header("Content-Type", "application/json")
+                                    .addHeader("Authorization", "key=AAAAT31oZAs:APA91bFxIff62TJ_bv0amJJ-I6LuYdNL13ATpy8EAY-3MyzljI2DVymZbmWuU1VuDCpClzDXO3_xEDG5dkRolTSlddvTnsEVqDETrXHURNUeTd-1q3Uz5iMxLMv-mt63ICyd8AnItUmB")
+                                    .url("https://fcm.googleapis.com/fcm/send")
+                                    .post(requestBody)
+                                    .build();
+
+                            OkHttpClient okHttpClient = new OkHttpClient();
+                            okHttpClient.newCall(request).enqueue(new Callback() {
+                                @Override
+                                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                                    Log.d("post", "error");
+                                }
+
+                                @Override
+                                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                                    Log.d("post", "success");
+                                }
+                            });
+                        }
                         return;
                     }
                 }
@@ -273,7 +350,7 @@ public class ChatRoom extends AppCompatActivity {
                     notificationModel.data.title = "보낸 사람 : " + myName;
                     notificationModel.data.body = myComment;
                     notificationModel.data.sendingUser = myName;
-                    notificationModel.data.chatRoomPath = chatRoomPath;
+                    notificationModel.data.chatRoomPath = chatRoomPath2;
                     notificationModel.data.receiver = friendName;
                     notificationModel.data.receiverUid = friendUid;
 
@@ -341,7 +418,7 @@ public class ChatRoom extends AppCompatActivity {
             notificationModel.data.title = "보낸 사람 : " + myName;
             notificationModel.data.body = myComment;
             notificationModel.data.sendingUser = myName;
-            notificationModel.data.chatRoomPath = chatRoomPath;
+            notificationModel.data.chatRoomPath = chatRoomPath2;
             notificationModel.data.receiver = userName.get(i);
             notificationModel.data.receiverUid = userUid.get(i);
 
