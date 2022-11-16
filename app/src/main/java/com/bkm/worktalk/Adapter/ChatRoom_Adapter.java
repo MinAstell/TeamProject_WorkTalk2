@@ -2,6 +2,7 @@ package com.bkm.worktalk.Adapter;
 
 import android.content.Context;
 import android.text.Layout;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +11,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Dimension;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bkm.worktalk.BeginApp.Login;
 import com.bkm.worktalk.DTO.ChatRoom_DTO;
 import com.bkm.worktalk.R;
 import com.bumptech.glide.Glide;
@@ -25,11 +28,11 @@ public class ChatRoom_Adapter extends RecyclerView.Adapter<ChatRoom_Adapter.Cust
     private String myName;
     private Context context;
 
-    private ArrayList<ChatRoom_DTO.Comment> arrayList;
+    private ArrayList<ChatRoom_DTO.Comment2> arrayList;
 
     Layout LinearLayoutUserName;
 
-    public ChatRoom_Adapter(ArrayList<ChatRoom_DTO.Comment> arrayList, Context context, String myName) {
+    public ChatRoom_Adapter(ArrayList<ChatRoom_DTO.Comment2> arrayList, Context context, String myName) {
         this.arrayList = arrayList;
         this.context = context;
         this.myName = myName;
@@ -49,12 +52,27 @@ public class ChatRoom_Adapter extends RecyclerView.Adapter<ChatRoom_Adapter.Cust
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-
-        if(arrayList.get(position).readUsers.size() == 2) {
-            holder.readChecked.setText("");
+        if(Login.appData.getString("projectCheck", "").equals("y")) {
+            if(!Login.appData.getString("userCnt", "").equals("")) {
+                int userCnt = Integer.parseInt(Login.appData.getString("userCnt", ""));
+                Log.d("userCnt2", String.valueOf(userCnt));
+                String readChk = String.valueOf((userCnt - arrayList.get(position).readUsers.size()));
+                Log.d("readChk", readChk);
+                if(readChk.equals("0")) {
+                    holder.readChecked.setText("");
+                }
+                else {
+                    holder.readChecked.setText(readChk);
+                }
+            }
+        }
+        else if(Login.appData.getString("projectCheck", "").equals("n")) {
+            if(arrayList.get(position).readUsers.size() == 2) {
+                holder.readChecked.setText("");
+            }
         }
 
-        ChatRoom_DTO.Comment comment = arrayList.get(position);
+        ChatRoom_DTO.Comment2 comment = arrayList.get(position);
 
         holder.tv_comments.setText(comment.userContents);
 
@@ -63,7 +81,7 @@ public class ChatRoom_Adapter extends RecyclerView.Adapter<ChatRoom_Adapter.Cust
             holder.tv_nick.setText("");
             holder.tv_timestamp.setText(comment.timestamp);
             holder.tv_comments.setBackgroundResource(R.drawable.rightbubble_2);
-            holder.tv_comments.setTextSize(22);
+            holder.tv_comments.setTextSize(19);
 
             holder.LinearLayoutMessage.setGravity(Gravity.RIGHT);
             holder.LinearLayoutUserName.setGravity(Gravity.RIGHT);

@@ -46,7 +46,6 @@
                 android:paddingLeft="25dp"
                 android:paddingRight="10dp">
 
-
                 <TextView
                     android:id="@+id/readChecked"
                     android:layout_width="10dp"
