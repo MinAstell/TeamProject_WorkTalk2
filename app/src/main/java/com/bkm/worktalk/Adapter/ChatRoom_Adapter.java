@@ -25,11 +25,11 @@ public class ChatRoom_Adapter extends RecyclerView.Adapter<ChatRoom_Adapter.Cust
     private String myName;
     private Context context;
 
-    private ArrayList<ChatRoom_DTO.Comment> arrayList;
+    private ArrayList<ChatRoom_DTO.Comment2> arrayList;
 
     Layout LinearLayoutUserName;
 
-    public ChatRoom_Adapter(ArrayList<ChatRoom_DTO.Comment> arrayList, Context context, String myName) {
+    public ChatRoom_Adapter(ArrayList<ChatRoom_DTO.Comment2> arrayList, Context context, String myName) {
         this.arrayList = arrayList;
         this.context = context;
         this.myName = myName;
@@ -54,7 +54,7 @@ public class ChatRoom_Adapter extends RecyclerView.Adapter<ChatRoom_Adapter.Cust
             holder.readChecked.setText("");
         }
 
-        ChatRoom_DTO.Comment comment = arrayList.get(position);
+        ChatRoom_DTO.Comment2 comment = arrayList.get(position);
 
         holder.tv_comments.setText(comment.userContents);
 
