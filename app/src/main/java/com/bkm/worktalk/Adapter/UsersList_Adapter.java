@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bkm.worktalk.BeginApp.Login;
 import com.bkm.worktalk.ChatRoom;
 import com.bkm.worktalk.R;
 import com.bkm.worktalk.DTO.UserListsDTO;
@@ -133,6 +135,10 @@ public class UsersList_Adapter extends RecyclerView.Adapter<UsersList_Adapter.Cu
                     chatRoomPath = myName+"_"+opponent;
                     Log.d("chatRoomPath:usrlsit", chatRoomPath);
 
+                    SharedPreferences.Editor editor = Login.appData.edit();
+                    editor.putString("projectCheck", "n");
+                    editor.apply();
+
                     Intent intent = new Intent(context, ChatRoom.class);
                     intent.putExtra("chatRoomPath", chatRoomPath);
                     intent.putExtra("myUid", myUid);
@@ -153,6 +159,10 @@ public class UsersList_Adapter extends RecyclerView.Adapter<UsersList_Adapter.Cu
 
                                 chatRoomPath = opponent+"_"+myName;
                                 Log.d("chatRoomPath:usrlsit", chatRoomPath);
+
+                                SharedPreferences.Editor editor = Login.appData.edit();
+                                editor.putString("projectCheck", "n");
+                                editor.apply();
 
                                 Intent intent = new Intent(context, ChatRoom.class);
                                 intent.putExtra("chatRoomPath", chatRoomPath);
@@ -178,6 +188,10 @@ public class UsersList_Adapter extends RecyclerView.Adapter<UsersList_Adapter.Cu
                                 mDatabase.child(myName + "_" + opponent).push().setValue(map);
                                 databaseReference.child(myUid).push().updateChildren(map2);
                                 chatRoomPath = myName + "_" + opponent;
+
+                                SharedPreferences.Editor editor = Login.appData.edit();
+                                editor.putString("projectCheck", "n");
+                                editor.apply();
 
                                 Intent intent = new Intent(context, ChatRoom.class);
                                 intent.putExtra("chatRoomPath", chatRoomPath);

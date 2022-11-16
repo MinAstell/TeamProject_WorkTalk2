@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bkm.worktalk.BeginApp.Login;
 import com.bkm.worktalk.R;
@@ -43,15 +44,19 @@ public class FragSettings extends Fragment {
     private String myUid;
     private DatabaseReference mDatabase;
     private String myProfileImage = "";
+    private String myEmail = "";
+    private String myName = "";
 
     Button btn_settings_profile_photo_change,
            btn_settings_user_edit,
            btn_settings_user_alarm,
            btn_settings_user_signout,
-           btn_settings_user_delete;
+           btn_settings_user_delete,
+            btn_settings_user_wtf;
 
     Uri uri;
     ImageView iv_settings_profile_photo_change;
+    TextView tv_settings_profile_mail, tv_settings_profile_name;
 
     private static final int PICK_FROM_ALBUM = 1;
 
@@ -68,12 +73,23 @@ public class FragSettings extends Fragment {
         btn_settings_user_alarm = view.findViewById(R.id.btn_settings_user_alarm);
         btn_settings_user_signout = view.findViewById(R.id.btn_settings_user_signout);
         btn_settings_user_delete = view.findViewById(R.id.btn_settings_user_delete);
+        tv_settings_profile_mail = view.findViewById(R.id.tv_settings_profile_mail);
+        tv_settings_profile_name = view.findViewById(R.id.tv_settings_profile_name);
+        btn_settings_user_wtf = view.findViewById(R.id.btn_settings_user_wtf);
 
         iv_settings_profile_photo_change = (ImageView) view.findViewById(R.id.iv_settings_profile_photo_change);
 
         mDatabase = FirebaseDatabase.getInstance().getReference("UserInfo");
 
+        getMyInfo();
         loadProfile();
+
+        btn_settings_user_wtf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAlert("홈페이지 공사중!...");
+            }
+        });
 
         btn_settings_user_signout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,6 +170,26 @@ public class FragSettings extends Fragment {
                     Log.d("프로필 경로", dataSnapshot.child("profileImageUrl").getValue().toString());
                     myProfileImage = dataSnapshot.child("profileImageUrl").getValue().toString();
                     Glide.with(FragSettings.this).load(myProfileImage).apply(new RequestOptions().circleCrop().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)).into(iv_settings_profile_photo_change);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void getMyInfo() {
+        mDatabase.child(myUid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getChildrenCount() > 0) {
+                    myEmail = dataSnapshot.child("emailId").getValue().toString();
+                    myName = dataSnapshot.child("name").getValue().toString();
+
+                    tv_settings_profile_mail.setText(myEmail);
+                    tv_settings_profile_name.setText(myName);
                 }
             }
 

@@ -46,7 +46,6 @@
                 android:paddingLeft="25dp"
                 android:paddingRight="10dp">
 
-
                 <TextView
                     android:id="@+id/readChecked"
                     android:layout_width="10dp"
@@ -56,7 +55,7 @@
                     android:layout_marginRight="5dp"
                     android:text="1"
                     android:textColor="#000000"
-                    android:textSize="21sp" />
+                    android:textSize="18dp" />
 
                 <TextView
                     android:id="@+id/tv_comments"

@@ -1,6 +1,7 @@
 package com.bkm.worktalk;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -67,6 +68,7 @@ public class ChatRoom extends AppCompatActivity {
     public String friendUid = "";
     private String chatRoomPath2 = "";
     private int chkProject = 0;
+    public String myToken = "";
 
     ArrayList<JoinDTO> friendTokenList = new ArrayList<>();
     ArrayList<String> userTokens = new ArrayList<>();
@@ -119,9 +121,13 @@ public class ChatRoom extends AppCompatActivity {
 
             tv_friendName.setText(chatRoomPath2);
             chkProject = 1;
+            getProjectUserCnt();
         }
 
+        getMyToken();
+
         Log.d("채팅방경로2", chatRoomPath2);
+        Log.d("chkProject", String.valueOf(chkProject));
 
 //        getMyProfileImage();
 
@@ -211,6 +217,8 @@ public class ChatRoom extends AppCompatActivity {
 
                         if(chkProject == 1) {
                             if (comment2.userEmail.equals("")) {
+                                Log.d("userEmail", comment2.userEmail);
+                                Log.d("chk", "들어옴");
                                 Map<String, Object> map = new HashMap<>();
                                 map.clear();
                                 map.put(myName, true);
@@ -219,7 +227,10 @@ public class ChatRoom extends AppCompatActivity {
                             }
                         }
                         else if(chkProject == 0) {
+                            Log.d("createdTime", comment2.createdTime);
                             if(comment2.createdTime.equals("")) {
+                                Log.d("createdTime2", comment2.createdTime);
+                                Log.d("readusers", "들어옴");
                                 Map<String, Object> map = new HashMap<>();
                                 map.clear();
                                 map.put(myName, true);
@@ -242,6 +253,7 @@ public class ChatRoom extends AppCompatActivity {
     public void onBackPressed(){
 
         mDatabase.child(chatRoomPath).removeEventListener(valueEventListener);
+        chkProject = 0;
         finish();
     }
 
@@ -249,7 +261,7 @@ public class ChatRoom extends AppCompatActivity {
 
         mDatabase2 = FirebaseDatabase.getInstance().getReference("UserInfo");
 
-        if(Login.appData.getString("프로젝트여부", "").equals("y")) {
+        if(Login.appData.getString("projectCheck", "").equals("y")) {
             mDatabase.child(chatRoomPath2).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -273,10 +285,48 @@ public class ChatRoom extends AppCompatActivity {
                                     if(dataSnapshot.getChildrenCount() > 0) {
                                         for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                             JoinDTO joinDTO = snapshot.getValue(JoinDTO.class);
+                                            Log.d("token", joinDTO.token);
                                             userTokens.add(joinDTO.token);
                                             userName.add(joinDTO.name);
                                             userUid.add(snapshot.getKey());
                                         }
+
+                                        for(int i=0; i<userTokens.size(); i++) {
+                                            if(!myToken.equals(userTokens.get(i))) {
+                                                Log.d("userTokens", userTokens.get(i));
+                                                Gson gson = new Gson();
+                                                NotificationModel notificationModel = new NotificationModel();
+                                                notificationModel.to = userTokens.get(i);
+                                                notificationModel.data.title = "보낸 사람 : " + myName;
+                                                notificationModel.data.body = myComment;
+                                                notificationModel.data.sendingUser = myName;
+                                                notificationModel.data.chatRoomPath = chatRoomPath2;
+                                                notificationModel.data.receiver = userName.get(i);
+                                                notificationModel.data.receiverUid = userUid.get(i);
+
+                                                RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf8"), gson.toJson(notificationModel));
+                                                Request request = new Request.Builder()
+                                                        .header("Content-Type", "application/json")
+                                                        .addHeader("Authorization", "key=AAAAT31oZAs:APA91bFxIff62TJ_bv0amJJ-I6LuYdNL13ATpy8EAY-3MyzljI2DVymZbmWuU1VuDCpClzDXO3_xEDG5dkRolTSlddvTnsEVqDETrXHURNUeTd-1q3Uz5iMxLMv-mt63ICyd8AnItUmB")
+                                                        .url("https://fcm.googleapis.com/fcm/send")
+                                                        .post(requestBody)
+                                                        .build();
+
+                                                OkHttpClient okHttpClient = new OkHttpClient();
+                                                okHttpClient.newCall(request).enqueue(new Callback() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                                                        Log.d("post", "error");
+                                                    }
+
+                                                    @Override
+                                                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                                                        Log.d("post", "success");
+                                                    }
+                                                });
+                                            }
+                                        }
+                                        return;
                                     }
                                 }
 
@@ -286,40 +336,42 @@ public class ChatRoom extends AppCompatActivity {
                                 }
                             });
                         }
+//                        Log.d("userTokens사이즈", String.valueOf(userTokens.size()));
 
-                        for(int i=0; i<userTokens.size(); i++) {
-                            Gson gson = new Gson();
-                            NotificationModel notificationModel = new NotificationModel();
-                            notificationModel.to = userTokens.get(i);
-                            notificationModel.data.title = "보낸 사람 : " + myName;
-                            notificationModel.data.body = myComment;
-                            notificationModel.data.sendingUser = myName;
-                            notificationModel.data.chatRoomPath = chatRoomPath2;
-                            notificationModel.data.receiver = userName.get(i);
-                            notificationModel.data.receiverUid = userUid.get(i);
-
-                            RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf8"), gson.toJson(notificationModel));
-                            Request request = new Request.Builder()
-                                    .header("Content-Type", "application/json")
-                                    .addHeader("Authorization", "key=AAAAT31oZAs:APA91bFxIff62TJ_bv0amJJ-I6LuYdNL13ATpy8EAY-3MyzljI2DVymZbmWuU1VuDCpClzDXO3_xEDG5dkRolTSlddvTnsEVqDETrXHURNUeTd-1q3Uz5iMxLMv-mt63ICyd8AnItUmB")
-                                    .url("https://fcm.googleapis.com/fcm/send")
-                                    .post(requestBody)
-                                    .build();
-
-                            OkHttpClient okHttpClient = new OkHttpClient();
-                            okHttpClient.newCall(request).enqueue(new Callback() {
-                                @Override
-                                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                                    Log.d("post", "error");
-                                }
-
-                                @Override
-                                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                                    Log.d("post", "success");
-                                }
-                            });
-                        }
-                        return;
+//                        for(int i=0; i<userTokens.size(); i++) {
+//                            Log.d("userTokens", userTokens.get(i));
+//                            Gson gson = new Gson();
+//                            NotificationModel notificationModel = new NotificationModel();
+//                            notificationModel.to = userTokens.get(i);
+//                            notificationModel.data.title = "보낸 사람 : " + myName;
+//                            notificationModel.data.body = myComment;
+//                            notificationModel.data.sendingUser = myName;
+//                            notificationModel.data.chatRoomPath = chatRoomPath2;
+//                            notificationModel.data.receiver = userName.get(i);
+//                            notificationModel.data.receiverUid = userUid.get(i);
+//
+//                            RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf8"), gson.toJson(notificationModel));
+//                            Request request = new Request.Builder()
+//                                    .header("Content-Type", "application/json")
+//                                    .addHeader("Authorization", "key=AAAAT31oZAs:APA91bFxIff62TJ_bv0amJJ-I6LuYdNL13ATpy8EAY-3MyzljI2DVymZbmWuU1VuDCpClzDXO3_xEDG5dkRolTSlddvTnsEVqDETrXHURNUeTd-1q3Uz5iMxLMv-mt63ICyd8AnItUmB")
+//                                    .url("https://fcm.googleapis.com/fcm/send")
+//                                    .post(requestBody)
+//                                    .build();
+//
+//                            OkHttpClient okHttpClient = new OkHttpClient();
+//                            okHttpClient.newCall(request).enqueue(new Callback() {
+//                                @Override
+//                                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+//                                    Log.d("post", "error");
+//                                }
+//
+//                                @Override
+//                                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+//                                    Log.d("post", "success");
+//                                }
+//                            });
+//                        }
+//                        return;
                     }
                 }
 
@@ -385,6 +437,54 @@ public class ChatRoom extends AppCompatActivity {
                             Log.d("post", "success");
                         }
                     });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    int userCnt = 0;
+    public void getProjectUserCnt() {
+        mDatabase.child(chatRoomPath2).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if(dataSnapshot.getChildrenCount() > 0) {
+
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                        ChatRoom_DTO.Comment2 comment2 = snapshot.getValue(ChatRoom_DTO.Comment2.class);
+                        if(!comment2.userEmail.equals("")) {
+                            ++userCnt;
+                        }
+                    }
+                    SharedPreferences.Editor editor = Login.appData.edit();
+                    editor.putString("userCnt", String.valueOf(userCnt));
+                    editor.apply();
+                    Log.d("userCnt", String.valueOf(userCnt));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void getMyToken() {
+        mDatabase2 = FirebaseDatabase.getInstance().getReference("UserInfo");
+        mDatabase2.child(myUid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getChildrenCount() > 0) {
+                    myToken = dataSnapshot.child("token").getValue().toString();
+                    Log.d("myToken", myToken);
                 }
             }
 
