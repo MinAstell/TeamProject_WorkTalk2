@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="5"
-        android:background="#FFFFFF"
+        android:background="#5AA1D8"
         android:orientation="vertical">
 
         <TextView
@@ -22,7 +22,7 @@
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
             android:text="멤버"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textSize="20dp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -49,22 +49,6 @@
 
             </LinearLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="bottom|right">
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fab_project"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:backgroundTint="#AFDEF9"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/users_new" />
-
-            </RelativeLayout>
         </FrameLayout>
     </LinearLayout>
 

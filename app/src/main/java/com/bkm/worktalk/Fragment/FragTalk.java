@@ -28,7 +28,6 @@ import java.util.ArrayList;
 
 public class FragTalk extends Fragment {
     public DatabaseReference databaseReference;
-    private FloatingActionButton fab_talk;
     private RecyclerView rv_talkList;
     private LinearLayoutManager linearLayoutManager;
 
@@ -39,7 +38,6 @@ public class FragTalk extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_frag_talk, container, false);
 
-        fab_talk = view.findViewById(R.id.fab_talk);
         rv_talkList = view.findViewById(R.id.rv_talkList);
 
         linearLayoutManager = new LinearLayoutManager(getContext());

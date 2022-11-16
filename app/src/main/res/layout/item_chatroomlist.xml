@@ -56,22 +56,6 @@
                         android:textStyle="bold" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="50"
-                    android:gravity="right|center_vertical"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_userHp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="010-1234-1234"
-                        android:textColor="#000000"
-                        android:textSize="16dp" />
-                </LinearLayout>
-
             </LinearLayout>
 
             <LinearLayout
@@ -86,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLength="30"
-                    android:text="이메일"
+                    android:text="대화 마지막 내용"
                     android:textColor="#000000"
                     android:textSize="16dp" />
             </LinearLayout>

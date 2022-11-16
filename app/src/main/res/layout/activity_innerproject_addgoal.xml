@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:text="새 프로젝트 목표"
                     android:textColor="#000000"
-                    android:textSize="15dp"
+                    android:textSize="16dp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -94,27 +94,41 @@
                 android:paddingHorizontal="5dp"
                 android:paddingTop="5dp">
 
-                <EditText
-                    android:id="@+id/et_addGoalExplain"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="82"
-                    android:background="@android:color/transparent"
-                    android:ems="10"
-                    android:gravity="top"
-                    android:hint="프로젝트 내용 및 설명(300자 이내)"
-                    android:inputType="textMultiLine"
-                    android:maxLength="300"
-                    android:textColor="#000000"
-                    android:textColorHint="#808080"
-                    android:textSize="14sp" />
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/btn_createGoal"
+                    <EditText
+                        android:id="@+id/et_addGoalExplain"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:ems="10"
+                        android:gravity="top"
+                        android:hint="프로젝트 내용 및 설명(300자 이내)"
+                        android:inputType="textMultiLine"
+                        android:maxLength="300"
+                        android:textColor="#000000"
+                        android:textColorHint="#808080"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="18"
-                    android:text="목표 생성" />
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="10dp">
+
+                    <Button
+                        android:id="@+id/btn_createGoal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="목표 생성" />
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>

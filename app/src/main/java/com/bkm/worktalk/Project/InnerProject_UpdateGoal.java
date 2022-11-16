@@ -56,10 +56,10 @@ public class InnerProject_UpdateGoal extends AppCompatActivity {
     Button.OnClickListener mClickListener = new Button.OnClickListener() {
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.ib_clearProjectName: //프로젝트 목표 제목 옆의 이미지 버튼을 누르면 해당 칸이 비워짐.
+                case R.id.ib_clearUpdateGoalName: //프로젝트 목표 제목 옆의 이미지 버튼을 누르면 해당 칸이 비워짐.
                     et_updateGoalName.setText("");
                     break;
-                case R.id.ib_clearProjectExplain: //프로젝트 목표 설명 옆의 이미지 버튼을 누르면 해당 칸이 비워짐.
+                case R.id.ib_clearUpdateGoalExplain: //프로젝트 목표 설명 옆의 이미지 버튼을 누르면 해당 칸이 비워짐.
                     et_updateGoalExplain.setText("");
                     break;
                 case R.id.btn_updateGoal: //목표 수정을 누르면 데이터가 업데이트됨.
