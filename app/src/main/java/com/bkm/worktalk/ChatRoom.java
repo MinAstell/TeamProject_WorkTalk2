@@ -49,7 +49,7 @@ public class ChatRoom extends AppCompatActivity {
     public String friendName;
     public String myProfileImageUrl;
 
-    private ArrayList<ChatRoom_DTO.Comment> arrayList;
+    private ArrayList<ChatRoom_DTO.Comment2> arrayList;
     private ChatRoom_Adapter chatRoom_adapter;
     private RecyclerView recyclerView;
     public  RecyclerView.Adapter mAdapter;
@@ -105,7 +105,7 @@ public class ChatRoom extends AppCompatActivity {
             myUid = bundle.getString("myUid");
 
             tv_friendName.setText(friendName);
-           Log.d("chatRoom2", "하이1");
+           Log.d("chatRoom2", chatRoomPath2);
         }
         else if(Login.appData.getString("projectCheck", "").equals("y")) {
             Intent intent = getIntent();
@@ -121,7 +121,7 @@ public class ChatRoom extends AppCompatActivity {
             chkProject = 1;
         }
 
-//        Log.d("채팅방경로", chatRoomPath);
+        Log.d("채팅방경로2", chatRoomPath2);
 
 //        getMyProfileImage();
 
@@ -138,16 +138,16 @@ public class ChatRoom extends AppCompatActivity {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
                         ChatRoom_DTO.Comment2 comment2 = snapshot.getValue(ChatRoom_DTO.Comment2.class);
-                        ChatRoom_DTO.Comment comment = snapshot.getValue(ChatRoom_DTO.Comment.class);
+//                        ChatRoom_DTO.Comment comment = snapshot.getValue(ChatRoom_DTO.Comment.class);
 
                         if(chkProject == 1) {
                             if (comment2.userEmail.equals("")) {
-                                arrayList.add(comment);
+                                arrayList.add(comment2);
                             }
                         }
                         else if(chkProject == 0) {
-                            if(comment.createdTime.equals("")) {
-                                arrayList.add(comment);
+                            if(comment2.createdTime.equals("")) {
+                                arrayList.add(comment2);
                             }
                         }
                     }
@@ -177,7 +177,7 @@ public class ChatRoom extends AppCompatActivity {
 
                 myComment = etComments.getText().toString();
 
-                ChatRoom_DTO.Comment comment = new ChatRoom_DTO.Comment();
+                ChatRoom_DTO.Comment2 comment = new ChatRoom_DTO.Comment2();
                 comment.userName = myName;
                 comment.userContents = myComment;
                 comment.readUsers.put(myName, true);
@@ -209,13 +209,23 @@ public class ChatRoom extends AppCompatActivity {
 //                        Log.d("chatRoom", comment.createdTime);
                         Log.d("userEmail", comment2.userEmail);
 
-                        if (comment2.userEmail.equals("")) {
+                        if(chkProject == 1) {
+                            if (comment2.userEmail.equals("")) {
+                                Map<String, Object> map = new HashMap<>();
+                                map.clear();
+                                map.put(myName, true);
 
-                            Map<String, Object> map = new HashMap<>();
-                            map.clear();
-                            map.put(myName, true);
+                                mDatabase.child(chatRoomPath2).child(snapshot.getKey()).child("readUsers").updateChildren(map);
+                            }
+                        }
+                        else if(chkProject == 0) {
+                            if(comment2.createdTime.equals("")) {
+                                Map<String, Object> map = new HashMap<>();
+                                map.clear();
+                                map.put(myName, true);
 
-                            mDatabase.child(chatRoomPath).child(snapshot.getKey()).child("readUsers").updateChildren(map);
+                                mDatabase.child(chatRoomPath2).child(snapshot.getKey()).child("readUsers").updateChildren(map);
+                            }
                         }
                     }
                 }

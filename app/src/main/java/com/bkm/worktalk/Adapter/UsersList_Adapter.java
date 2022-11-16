@@ -41,7 +41,7 @@ public class UsersList_Adapter extends RecyclerView.Adapter<UsersList_Adapter.Cu
     private String myName;
     private String myUid;
     private String opponent;
-    private String chatRoomPath;
+    public String chatRoomPath;
 
     public UsersList_Adapter(ArrayList<UserListsDTO> arrayList, String myUid, String myName, Context context) {
         this.arrayList = arrayList;
@@ -131,6 +131,7 @@ public class UsersList_Adapter extends RecyclerView.Adapter<UsersList_Adapter.Cu
                 if(dataSnapshot.getChildrenCount() > 0) {
 
                     chatRoomPath = myName+"_"+opponent;
+                    Log.d("chatRoomPath:usrlsit", chatRoomPath);
 
                     Intent intent = new Intent(context, ChatRoom.class);
                     intent.putExtra("chatRoomPath", chatRoomPath);
@@ -151,6 +152,7 @@ public class UsersList_Adapter extends RecyclerView.Adapter<UsersList_Adapter.Cu
                             if(dataSnapshot.getChildrenCount() > 0) {
 
                                 chatRoomPath = opponent+"_"+myName;
+                                Log.d("chatRoomPath:usrlsit", chatRoomPath);
 
                                 Intent intent = new Intent(context, ChatRoom.class);
                                 intent.putExtra("chatRoomPath", chatRoomPath);
