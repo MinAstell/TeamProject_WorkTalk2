@@ -57,7 +57,6 @@ public class FragUsers extends Fragment {
     }
 
     private DatabaseReference mDatabase;
-    private FloatingActionButton fab_project;
     private LinearLayoutManager linearLayoutManager;
     private RecyclerView rv_userList;
 
@@ -70,7 +69,6 @@ public class FragUsers extends Fragment {
 
         mDatabase = FirebaseDatabase.getInstance().getReference("dept");
 
-        fab_project = view.findViewById(R.id.fab_project);
         rv_userList = view.findViewById(R.id.rv_usersList);
 
         linearLayoutManager = new LinearLayoutManager(getContext());
@@ -78,13 +76,6 @@ public class FragUsers extends Fragment {
         rv_userList.setHasFixedSize(true);
 
         selUserList();
-
-        fab_project.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAlert("플로팅 버튼 눌림!");
-            }
-        });
 
         return view;
     }
