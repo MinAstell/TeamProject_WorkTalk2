@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bkm.worktalk.Adapter.UsersList_Adapter;
+import com.bkm.worktalk.DTO.JoinDTO;
 import com.bkm.worktalk.DTO.UserListsDTO;
 import com.bkm.worktalk.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -31,6 +32,7 @@ public class FragUsers extends Fragment {
     private static String myName;
     private static String myUid;
     private static String myDept;
+    public String profileImageUrl;
 
     public String getMyUid() {
         return myUid;
@@ -57,10 +59,12 @@ public class FragUsers extends Fragment {
     }
 
     private DatabaseReference mDatabase;
+    private DatabaseReference mDatabase2;
     private LinearLayoutManager linearLayoutManager;
     private RecyclerView rv_userList;
 
     ArrayList<UserListsDTO> userList = new ArrayList<>();
+    ArrayList<JoinDTO> userProfile2 = new ArrayList<>();
 
     @Nullable
     @Override
@@ -68,6 +72,7 @@ public class FragUsers extends Fragment {
         View view = inflater.inflate(R.layout.activity_frag_users, container, false);
 
         mDatabase = FirebaseDatabase.getInstance().getReference("dept");
+        mDatabase2 = FirebaseDatabase.getInstance().getReference("UserInfo");
 
         rv_userList = view.findViewById(R.id.rv_usersList);
 
@@ -93,23 +98,39 @@ public class FragUsers extends Fragment {
         alertDialog.show();
     }
     public void selUserList() {
+        userList.clear();
+//        userProfile2.clear();
         mDatabase.child(getMyDept()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.getChildrenCount() > 0) {
-                    userList.clear();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-
                         UserListsDTO userListsDTO = snapshot.getValue(UserListsDTO.class);
-
                         if(!userListsDTO.name.equals(getMyName())) {
                             userList.add(userListsDTO);
+
+                            mDatabase2.orderByChild("emailId").equalTo(userListsDTO.email).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
+                                    if(dataSnapshot2.getChildrenCount() > 0) {
+                                        for (DataSnapshot snapshot : dataSnapshot2.getChildren()) {
+                                            JoinDTO joinDTO = snapshot.getValue(JoinDTO.class);
+                                            userProfile2.add(joinDTO);
+                                            Log.d("profileList2", userProfile2.get(0).profileImageUrl);
+                                        }
+//                                        Log.d("profileList3", userProfile.get(0));
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                         }
                     }
-
-                    Log.d("userList", userList.get(0).name);
-
-                    UsersList_Adapter usersListAdapter = new UsersList_Adapter(userList, getMyUid(), getMyName(), getContext());
+                    Log.d("userProfile2", userProfile2.get(0).profileImageUrl);
+                    UsersList_Adapter usersListAdapter = new UsersList_Adapter(userList, userProfile2, getMyUid(), getMyName(), getContext());
                     rv_userList.setAdapter(usersListAdapter);
                 }
             }
