@@ -8,36 +8,61 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5">
+        android:layout_weight="5"
+        android:background="#5AA1D8">
 
-        <ImageButton
-            android:id="@+id/ib_innerProjectExit"
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
+            android:layout_height="match_parent"
             android:layout_weight="10"
-            android:background="@android:color/transparent"
-            android:scaleType="fitCenter"
-            app:srcCompat="@drawable/btn_all_del" />
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="7dp">
 
-        <TextView
-            android:id="@+id/tv_innerProjectName"
+            <ImageButton
+                android:id="@+id/ib_innerProjectExit"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/btn_x" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="65"
-            android:gravity="center_vertical"
-            android:text="프로젝트 이름"
-            android:textSize="16sp" />
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_deleteProject"
+            <TextView
+                android:id="@+id/tv_innerProjectName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="프로젝트 이름"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="25"
-            android:text="프로젝트 삭제"
-            android:textColor="#F32617"
-            android:textSize="12sp"
-            android:textStyle="bold" />
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="5dp">
+
+            <Button
+                android:id="@+id/btn_deleteProject"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/rounded_box_no_line"
+                android:text="프로젝트 삭제"
+                android:textColor="#F32617"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="5"
-        android:background="#FFFFFF"
+        android:background="#5AA1D8"
         android:orientation="vertical">
 
         <TextView
@@ -22,7 +22,7 @@
             android:layout_marginLeft="10dp"
             android:gravity="center_vertical"
             android:text="대화"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textSize="20dp"
             android:textStyle="bold" />
     </LinearLayout>

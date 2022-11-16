@@ -9,18 +9,17 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="5"
-        android:background="#FFFFFF"
+        android:background="#5AA1D8"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/textviewtitle"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
-            android:layout_weight="5"
             android:gravity="center_vertical"
             android:text="새 프로젝트"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textSize="20dp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -46,7 +45,7 @@
                 android:background="@android:color/transparent"
                 android:backgroundTint="#F1F1F1"
                 android:ems="10"
-                android:hint="프로젝트 이름 (최대 20글자)"
+                android:hint="프로젝트 제목 (최대 20글자)"
                 android:inputType="textPersonName"
                 android:maxLength="20"
                 android:textColor="#000000"
