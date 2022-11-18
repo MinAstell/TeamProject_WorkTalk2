@@ -63,8 +63,8 @@ public class FragUsers extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private RecyclerView rv_userList;
 
-    ArrayList<UserListsDTO> userList = new ArrayList<>();
-    ArrayList<JoinDTO> userProfile2 = new ArrayList<>();
+    public static ArrayList<UserListsDTO> userList = new ArrayList<>();
+    public static ArrayList<JoinDTO> user_profile = new ArrayList<>();
 
     @Nullable
     @Override
@@ -99,7 +99,7 @@ public class FragUsers extends Fragment {
     }
     public void selUserList() {
         userList.clear();
-//        userProfile2.clear();
+        user_profile.clear();
         mDatabase.child(getMyDept()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -115,10 +115,9 @@ public class FragUsers extends Fragment {
                                     if(dataSnapshot2.getChildrenCount() > 0) {
                                         for (DataSnapshot snapshot : dataSnapshot2.getChildren()) {
                                             JoinDTO joinDTO = snapshot.getValue(JoinDTO.class);
-                                            userProfile2.add(joinDTO);
-                                            Log.d("profileList2", userProfile2.get(0).profileImageUrl);
+                                            user_profile.add(joinDTO);
+                                            Log.d("profileImageUrl", joinDTO.profileImageUrl);
                                         }
-//                                        Log.d("profileList3", userProfile.get(0));
                                     }
                                 }
 
@@ -129,9 +128,7 @@ public class FragUsers extends Fragment {
                             });
                         }
                     }
-                    Log.d("userProfile2", userProfile2.get(0).profileImageUrl);
-                    UsersList_Adapter usersListAdapter = new UsersList_Adapter(userList, userProfile2, getMyUid(), getMyName(), getContext());
-                    rv_userList.setAdapter(usersListAdapter);
+                    setUdapter();
                 }
             }
 
@@ -140,5 +137,10 @@ public class FragUsers extends Fragment {
 
             }
         });
+    }
+
+    public void setUdapter() {
+        UsersList_Adapter usersListAdapter = new UsersList_Adapter(FragUsers.userList, FragUsers.user_profile, getMyUid(), getMyName(), getContext());
+        rv_userList.setAdapter(usersListAdapter);
     }
 }
