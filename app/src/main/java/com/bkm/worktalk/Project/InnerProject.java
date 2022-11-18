@@ -7,10 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bkm.worktalk.BeginApp.Login;
-import com.bkm.worktalk.DTO.JoinDTO;
+import com.bkm.worktalk.DTO.TalkListsDTO;
 import com.bkm.worktalk.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -133,6 +130,7 @@ public class InnerProject extends AppCompatActivity {
     private DatabaseReference databaseReferenceMember;
     private DatabaseReference databaseReference2;
     private DatabaseReference databaseReference3;
+    private DatabaseReference database2;
 
     private SwipeRefreshLayout srl_goalList; //프로젝트 목표 리사이클러뷰 레이아웃 새로고침
     private SwipeRefreshLayout srl_memberList; //프로젝트 멤버 리사이클러뷰 레이아웃 새로고침
@@ -275,6 +273,7 @@ public class InnerProject extends AppCompatActivity {
                 onDeleteGoal(); //목표 삭제
                 onDeleteMember(); //멤버 삭제
                 onDeleteProject(); //프로젝트 삭제
+                projectChk();
             }
         });
         myAlertBuilder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
@@ -320,6 +319,29 @@ public class InnerProject extends AppCompatActivity {
         databaseReferenceMember = database.getReference("projectMemberList").child(projectName);
 
         databaseReferenceMember.removeValue();
+    }
+
+    public void projectChk() {
+        database2 = FirebaseDatabase.getInstance().getReference("eachUserChatRoomInfo");
+        database2.child(Login.appData.getString("myUid", "")).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getChildrenCount() > 0) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Log.d("for", "들어옴");
+                        TalkListsDTO talkListsDTO = snapshot.getValue(TalkListsDTO.class);
+                        if(talkListsDTO.chatRoomPath.equals(projectName)) {
+                            database2.child(Login.appData.getString("myUid", "")).child(snapshot.getKey()).removeValue();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     //FragProject에서 데이터를 가져옴==================================================================
@@ -388,6 +410,19 @@ public class InnerProject extends AppCompatActivity {
         memberAdapter = new InnerProject_MemberList_Adapter(memberArrayList, getMemberListName(),
                 getMemberListEmail(), getMemberListHP(), getApplicationContext());
         rv_memberList.setAdapter(memberAdapter); //리사이클러뷰에 어댑터 연결
+    }
+
+    public void showAlert(String msg) {    // 다이얼로그 창 띄우는 메서드
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("").setMessage(msg);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int id)
+            {
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     // 채팅방 생성 및 이동기능을 가진 메소드 : 백경민 작업

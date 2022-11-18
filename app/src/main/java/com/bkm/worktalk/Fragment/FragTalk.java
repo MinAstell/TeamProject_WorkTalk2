@@ -60,10 +60,10 @@ public class FragTalk extends Fragment {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         TalkListsDTO talkListsDTO = snapshot.getValue(TalkListsDTO.class);
 
-                        if(talkListsDTO.chatRoomPath == null && talkListsDTO.opponent != null) {
+                        if(talkListsDTO.chatRoomPath.equals("") && !talkListsDTO.opponent.equals("")) {
                             talkList.add(talkListsDTO.opponent);
                         }
-                        else if(talkListsDTO.chatRoomPath != null && talkListsDTO.opponent == null) {
+                        else if(!talkListsDTO.chatRoomPath.equals("") && talkListsDTO.opponent.equals("")) {
                             talkList.add(talkListsDTO.chatRoomPath);
                         }
                         Log.d("값", talkListsDTO.toString());

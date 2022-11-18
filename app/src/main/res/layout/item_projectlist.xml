@@ -57,7 +57,6 @@
                         android:id="@+id/tv_userHp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="멤버 : 1000명"
                         android:textColor="#000000"
                         android:textSize="14sp" />
                 </LinearLayout>

@@ -40,16 +40,16 @@ public class UsersList_Adapter extends RecyclerView.Adapter<UsersList_Adapter.Cu
     public DatabaseReference databaseReference;
 
     private ArrayList<UserListsDTO> arrayList;
-    private ArrayList<JoinDTO> arrayListProfile;
+    private ArrayList<JoinDTO> array_profile;
     private Context context;
     private String myName;
     private String myUid;
     private String opponent;
     public String chatRoomPath;
 
-    public UsersList_Adapter(ArrayList<UserListsDTO> arrayList, ArrayList<JoinDTO> arrayListProfile, String myUid, String myName, Context context) {
+    public UsersList_Adapter(ArrayList<UserListsDTO> arrayList, ArrayList<JoinDTO> array_profile, String myUid, String myName, Context context) {
         this.arrayList = arrayList;
-        this.arrayListProfile = arrayListProfile;
+        this.array_profile = array_profile;
         this.myName = myName;
         this.context = context;
         this.myUid = myUid;
@@ -69,12 +69,11 @@ public class UsersList_Adapter extends RecyclerView.Adapter<UsersList_Adapter.Cu
 
     @Override
     public void onBindViewHolder(@NonNull CustomViewHolder holder, int position) {
-//        Log.d("profileList", arrayListProfile.get(position));
-//        if(arrayListProfile.get(position).equals("") | arrayListProfile.get(position) == null) {
+//        if(array_profile.get(position).getProfileImageUrl().equals("") | array_profile.get(position).getProfileImageUrl() == null) {
 //            Glide.with(holder.itemView.getContext()).load(R.drawable.profile_simple).apply(new RequestOptions().circleCrop()).into(holder.iv_userProfile);
 //        }
 //        else {
-//            Glide.with(holder.itemView.getContext()).load(arrayListProfile.get(position)).apply(new RequestOptions().circleCrop()).into(holder.iv_userProfile);
+//            Glide.with(holder.itemView.getContext()).load(array_profile.get(position).getProfileImageUrl()).apply(new RequestOptions().circleCrop()).into(holder.iv_userProfile);
 //        }
 
         holder.tv_userName.setText(arrayList.get(position).name);

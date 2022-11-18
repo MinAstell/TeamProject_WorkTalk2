@@ -18,6 +18,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="15dp"
             android:text="프로젝트 목표명"
+            android:textColor="#000000"
             android:textSize="14sp" />
 
         <TextView
@@ -41,7 +42,8 @@
             android:drawableRight="?android:attr/listChoiceIndicatorMultiple"
             android:gravity="right|center_vertical"
             android:paddingRight="15dp"
-            android:text="달성" />
+            android:text="달성"
+            android:textColor="#000000" />
 
     </LinearLayout>
 
